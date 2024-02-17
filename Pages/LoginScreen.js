@@ -3,7 +3,7 @@ import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, 
 import Icon from 'react-native-vector-icons/FontAwesome'; // Import Icon 
 
 
-const RegistrationScreen = () => {
+const Logincreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -156,4 +156,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default RegistrationScreen;
+export default Logincreen;
