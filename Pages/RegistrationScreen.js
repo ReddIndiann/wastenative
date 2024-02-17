@@ -15,7 +15,7 @@ const RegistrationScreen = () => {
             </View>
             
             <View style={styles.imageContainer}>
-              <Image source={require('../Images/Logo-Green.svg')} style={styles.imageStyle} />
+              <Image source={require('../Images/EcoHaul.png')} style={styles.imageStyle} />
               
             </View>
 
