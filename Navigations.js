@@ -12,6 +12,7 @@ import { Pressable,Image
  } from 'react-native';
 import SplashScreen from './Pages/SplashScreen';
 import RegistrationScreen from './Pages/RegistrationScreen';
+import Logincreen from './Pages/LoginScreen';
 
 
 
@@ -21,7 +22,7 @@ export default function Navigations() {
     <NavigationContainer>
       <Stack.Navigator>
       <Stack.Screen options={{headerShown: false}} name="SPLASH" component={SplashScreen} />
-        <Stack.Screen options={{headerShown: false}} name="Login" component={RegistrationScreen} />
+        <Stack.Screen options={{headerShown: false}} name="Login" component={Logincreen} />
        
       </Stack.Navigator>
     </NavigationContainer>
