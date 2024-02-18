@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
-import {UserIcon } from 'react-native-heroicons/outline'
+import {UserIcon,HashtagIcon,EnvelopeIcon,LockClosedIcon } from 'react-native-heroicons/outline'
 const RegistrationScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -10,13 +10,26 @@ const RegistrationScreen = () => {
         </View>
         <View style={styles.formContainer}>
           <View style={styles.inputGroup}>
-            <UserIcon/>
+            <UserIcon color="black" size={20} style={styles.sideIcon}/>
+            <TextInput style={styles.input}/>
           </View>
-          <View style={styles.inputGroup}></View>
-          <View style={styles.inputGroup}></View>
-          <View style={styles.inputGroup}></View>
-          <View style={styles.inputGroup}></View>
-          <Text>By continuing you agree with our \n Terms and Condotions</Text>
+          <View style={styles.inputGroup}>
+            <HashtagIcon color="black" size={20} style={styles.sideIcon}/>
+          </View>
+          <View style={styles.inputGroup}>
+          <EnvelopeIcon color="black" size={20} style={styles.sideIcon}/>
+          </View>
+          <View style={styles.inputGroup}>
+          <LockClosedIcon color="black" size={20} style={styles.sideIcon}/>
+          </View>
+          <View style={styles.inputGroup}>
+          <LockClosedIcon color="black" size={20} style={styles.sideIcon}/>
+          </View>
+          <Text style={{textAlign:"center"}}>By continuing you agree with our {"\n"}Terms and Condotions</Text>
+          <TouchableOpacity style={styles.registerBtn} onPress="">
+             <Text style={{color:"#fff",fontSize:16}}>Register</Text>
+          </TouchableOpacity>
+          <Text style={styles.signTxt}>Have an account? Sign in </Text>
         </View>
     </SafeAreaView>
   );
@@ -51,7 +64,7 @@ const styles = StyleSheet.create({
    },
    inputGroup:{
     backgroundColor:"#ECECEC",
-    width:"82%",
+    width:"85%",
     height:"10%",
     borderRadius:5,
     display:"flex",
@@ -60,7 +73,21 @@ const styles = StyleSheet.create({
     justifyContent:"space-between"
    },
    sideIcon:{
-    width:13
+    marginLeft:"4%"
+   },
+   registerBtn:{
+    width:"80%",
+    height:"10%",
+    backgroundColor:"#1C3530",
+    borderRadius:5,
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center"
+   },
+   input:{
+    width:"90%",
+    height:"90%",
+    borderRadius:10
    }
 
 });
