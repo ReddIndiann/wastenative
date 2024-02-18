@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import {UserIcon,HashtagIcon,EnvelopeIcon,LockClosedIcon } from 'react-native-heroicons/outline'
-
+import { useNavigation } from "@react-navigation/native";
 
 const Logincreen = () => {
+  const navigation=useNavigation();
   return (
     <SafeAreaView style={styles.safeArea}>
      <View style={styles.logoContainer}>
@@ -24,10 +25,10 @@ const Logincreen = () => {
         </View>
         <View style={styles.loginGroup}>
           <Text style={styles.resetPwd}>Click the link below to reset login credentials {"\n"} Forgot Password</Text>
-          <TouchableOpacity style={styles.registerBtn} onPress="">
+          <TouchableOpacity style={styles.registerBtn} onPress={()=>navigation.navigate('homescreen')}>
              <Text style={{color:"#fff",fontSize:16}}>Log In</Text>
           </TouchableOpacity>
-          <Text style={styles.signTxt} onPress={()=>navigate}>Have an account? Sign in </Text>
+          <Text style={styles.signTxt} onPress={()=>navigation.navigate('signIn')}>Dont have an account? Sign Up </Text>
         </View>
     </SafeAreaView>
   );
