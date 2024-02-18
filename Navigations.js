@@ -22,7 +22,7 @@ export default function Navigations() {
     <NavigationContainer>
       <Stack.Navigator>
       <Stack.Screen options={{headerShown: false}} name="SPLASH" component={SplashScreen} />
-        <Stack.Screen options={{headerShown: false}} name="Login" component={Logincreen} />
+        <Stack.Screen options={{headerShown: false}} name="Login" component={RegistrationScreen} />
        
       </Stack.Navigator>
     </NavigationContainer>
