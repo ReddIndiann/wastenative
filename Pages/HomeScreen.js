@@ -1,19 +1,63 @@
 import { View, Text, SafeAreaView,StyleSheet,Image, TextInput, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { useNavigation } from "@react-navigation/native";
+import React,{useState} from 'react'
 import MapView,{PROVIDER_GOOGLE} from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { Avatar } from "@react-native-material/core";
+import axios from 'axios';
+
 export default function HomeScreen() {
+  const username = "Emmanuel Nyatepe";    
+  const userId = "6734yug347643b3834gf65";
+  const [coordinate, setCoordinate] = useState(null);
+  const number = "0567395234"; 
+  const [type,setType]=useState("Plastic");
+
+
+
+  const [region, setRegion] = useState({
+    latitude: 5.614818,
+    longitude: -0.205874,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+
+  const handleMapPress = (e) => {
+    setCoordinate(e.nativeEvent.coordinate); // Store the coordinate object directly
+    console.log(e.nativeEvent.coordinate);
+  }
+
+  const sendLocationData = () => {
+    if (!coordinate) {
+      console.log('No location selected');
+      return;
+    }
+    const data = {
+      username,
+      userId,
+      number,
+      type,
+      lat: coordinate.latitude,
+      long: coordinate.longitude,
+    };
+
+    axios.post('http://191.168.2.230:5000/api/request', data)
+        .then(response => {
+            console.log(response.data)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+};
+
   return (
     <SafeAreaView  style={styles.home}>
-      <MapView style={styles.map}>
-        <Marker/>
+      <MapView onPress={handleMapPress} initialRegion={region}  style={styles.map}> 
+      {coordinate && <Marker coordinate={coordinate} />}
       </MapView>
       <View style={styles.float}>
         <View style={styles.logoContainer}>
           <Image source={require('../Images/EcoHaul.png')} style={styles.imageStyle}/>
-          <Avatar label="Emmanuel Nyatepe" size={45} style={{marginRight:"3%",}}/>
+          <Avatar label={username} size={45} style={{marginRight:"3%",}}/>
         </View>
         <TextInput style={styles.input}/>
         <View style={styles.requestContainer}>
@@ -21,7 +65,7 @@ export default function HomeScreen() {
             <Text style={styles.txt1}>Put in a Haul Request</Text>
             <Text style={styles.txt2}>Select a location on the map for waste pickup</Text>
           </View>
-          <TouchableOpacity style={styles.requestBtn}>
+          <TouchableOpacity onPress={sendLocationData} style={styles.requestBtn}>
             <Text style={{color:"#fff"}}>Make Request</Text>
           </TouchableOpacity>
         </View>
