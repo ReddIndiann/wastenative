@@ -1,8 +1,6 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'; // Import Icon 
-
-
+import {UserIcon } from 'react-native-heroicons/outline'
 const RegistrationScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -11,7 +9,9 @@ const RegistrationScreen = () => {
           <Text style={styles.logoText} >Let's get you started. Create an account to start with us</Text>
         </View>
         <View style={styles.formContainer}>
-          <View style={styles.inputGroup}></View>
+          <View style={styles.inputGroup}>
+            <UserIcon/>
+          </View>
           <View style={styles.inputGroup}></View>
           <View style={styles.inputGroup}></View>
           <View style={styles.inputGroup}></View>
@@ -52,7 +52,15 @@ const styles = StyleSheet.create({
    inputGroup:{
     backgroundColor:"#ECECEC",
     width:"82%",
-    height:"10%"
+    height:"10%",
+    borderRadius:5,
+    display:"flex",
+    flexDirection:'row',
+    alignItems:"center",
+    justifyContent:"space-between"
+   },
+   sideIcon:{
+    width:13
    }
 
 });
