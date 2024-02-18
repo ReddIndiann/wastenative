@@ -1,7 +1,9 @@
-import React from 'react';
+
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import {UserIcon,HashtagIcon,EnvelopeIcon,LockClosedIcon } from 'react-native-heroicons/outline'
 const RegistrationScreen = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.safeArea}>
         <View style={styles.logoContainer}>
@@ -15,21 +17,25 @@ const RegistrationScreen = () => {
           </View>
           <View style={styles.inputGroup}>
             <HashtagIcon color="black" size={20} style={styles.sideIcon}/>
+            <TextInput style={styles.input}/>
           </View>
           <View style={styles.inputGroup}>
           <EnvelopeIcon color="black" size={20} style={styles.sideIcon}/>
+          <TextInput style={styles.input}/>
           </View>
           <View style={styles.inputGroup}>
           <LockClosedIcon color="black" size={20} style={styles.sideIcon}/>
+          <TextInput style={styles.input}/>
           </View>
           <View style={styles.inputGroup}>
           <LockClosedIcon color="black" size={20} style={styles.sideIcon}/>
+          <TextInput style={styles.input}/>
           </View>
           <Text style={{textAlign:"center"}}>By continuing you agree with our {"\n"}Terms and Condotions</Text>
-          <TouchableOpacity style={styles.registerBtn} onPress="">
+          <TouchableOpacity style={styles.registerBtn} onPress={() => navigation.navigate('login')}>
              <Text style={{color:"#fff",fontSize:16}}>Register</Text>
           </TouchableOpacity>
-          <Text style={styles.signTxt}>Have an account? Sign in </Text>
+          <Text style={styles.signTxt} onPress={()=>navigation.navigate('login')}>Have an account? Sign in </Text>
         </View>
     </SafeAreaView>
   );
@@ -47,7 +53,7 @@ const styles = StyleSheet.create({
      display: "flex",
      flexDirection:"column",
      gap:"0.3%",
-     alignItems:"center"
+     alignItems:"center",
    },
    logoText:{
      textAlign:'center',

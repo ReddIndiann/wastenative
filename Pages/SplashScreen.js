@@ -15,7 +15,7 @@ const SplashScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (!loading) {
-      navigation.navigate('Login'); // Adjust as per your navigation setup
+      navigation.navigate('signIn'); // Adjust as per your navigation setup
     }
   }, [loading, navigation]);
 
