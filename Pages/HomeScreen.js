@@ -1,9 +1,10 @@
-import { View, Text, SafeAreaView,StyleSheet,Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, SafeAreaView,StyleSheet,Image, TextInput, TouchableOpacity,Modal } from 'react-native'
 import React,{useState} from 'react'
 import MapView,{PROVIDER_GOOGLE} from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { Avatar } from "@react-native-material/core";
 import axios from 'axios';
+import { XMarkIcon } from 'react-native-heroicons/outline';
 
 export default function HomeScreen() {
   const username = "Emmanuel Nyatepe";    
@@ -11,8 +12,11 @@ export default function HomeScreen() {
   const [coordinate, setCoordinate] = useState(null);
   const number = "0567395234"; 
   const [type,setType]=useState("Plastic");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-
+  const closeModal = () => {
+    setIsModalVisible(false); // Hide modal
+};
 
   const [region, setRegion] = useState({
     latitude: 5.614818,
@@ -49,7 +53,9 @@ export default function HomeScreen() {
         .catch(error => {
             console.error('Error:', error);
         });
-};
+
+        setIsModalVisible(true);
+  };
 
   return (
     <SafeAreaView  style={styles.home}>
@@ -72,6 +78,20 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
         </View>
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isModalVisible}
+          onRequestClose={closeModal}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Location data is being sent...</Text>
+            <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+              <XMarkIcon  color="white" size={20} style={styles.closeButtonText}/>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+
     </SafeAreaView>
   )
 }
@@ -152,5 +172,39 @@ const styles = StyleSheet.create({
       fontSize:9,
       fontWeight:"400",
       opacity:0.5
-    }
+    },
+    modalView: {
+      margin: 20,
+      width:"80%",
+      height:"50%",
+      alignSelf:"center",
+      marginTop:"55%",
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+          width: 0,
+          height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+  },
+  modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+  },
+  closeButton: {
+      backgroundColor: "#2196F3",
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+  },
+  closeButtonText: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+  }
 })
