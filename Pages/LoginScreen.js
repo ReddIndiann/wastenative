@@ -15,6 +15,14 @@ const Logincreen = () => {
       password
     }
     console.log(userData);
+    axios.post("http://172.20.10.5:5000/api/auth/login",userData)
+    .then((res)=>{
+      home
+  })
+  .catch((err)=>{
+      console.log(err)
+  })
+    
   }
 
   return (

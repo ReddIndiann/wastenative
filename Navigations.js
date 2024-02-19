@@ -14,8 +14,8 @@ export default function Navigations() {
     <NavigationContainer>
       <Stack.Navigator>
       <Stack.Screen options={{headerShown: false}} name="SPLASH" component={SplashScreen} />
-        <Stack.Screen options={{headerShown: false}} name="signIn" component={RegistrationScreen} />
         <Stack.Screen options={{headerShown: false}} name="login" component={Logincreen} />
+        <Stack.Screen options={{headerShown: false}} name="signIn" component={RegistrationScreen} />
         <Stack.Screen options={{headerShown: false}} name="homescreen" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
