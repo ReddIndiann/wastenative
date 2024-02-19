@@ -9,15 +9,19 @@ import RNPickerSelect from "react-native-picker-select";
 
 export default function HomeScreen() {
   const username = "Emmanuel Nyatepe";
-  const user_id = "6734yug347643b3834gf65";
+  const user = "6734yug347643b3834gf65";
   const [coordinate, setCoordinate] = useState(null);
   const number = "0567395234";
   const [type, setType] = useState("Plastic");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
+  const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
 
   const closeModal = () => {
     setIsModalVisible(false); // Hide modal
   };
+  const closeSuccessModal = () => setIsSuccessModalVisible(false);
+  const closeErrorModal = () => setIsErrorModalVisible(false);
 
   const [region, setRegion] = useState({
     latitude: 5.614818,
@@ -45,9 +49,6 @@ export default function HomeScreen() {
   const sendLocationData = () => {
 
     const data = {
-      username,
-      user_id,
-      number,
       type,
       lat: coordinate.latitude,
       long: coordinate.longitude,
@@ -57,12 +58,22 @@ export default function HomeScreen() {
       timeout: 100000
     })
       .then(response => {
-        console.log(response.data)
+        if (response.status === 200) {
+          setIsModalVisible(false);
+          setIsSuccessModalVisible(true);
+          setTimeout(() => {
+            setIsSuccessModalVisible(false);
+        }, 2000);
+
+        }else{
+          console.error('Error:', error);
+      setIsErrorModalVisible(true);
+        }
       })
       .catch(error => {
         console.error('Error:', error);
       });
-    setIsModalVisible(false);
+    
   };
 
   return (
@@ -116,7 +127,6 @@ export default function HomeScreen() {
                 { label: "Paper", value: "Paper" },
                 { label: "Glass", value: "Glass" },
                 { label: "Others", value: "Others" },
-                { label: "C", value: "C" },
               ]}
             />
           </View>
@@ -127,6 +137,36 @@ export default function HomeScreen() {
           <Text style={{ color: "#009065", fontSize: 13, fontWeight: 500,marginTop:"2%" }}>Click To Use</Text>
         </View>
       </Modal>
+
+      <Modal
+    animationType="slide"
+    transparent={true}
+    visible={isSuccessModalVisible}
+    onRequestClose={closeSuccessModal}>
+    <View style={styles.modalView}>
+      {/* Modal content */}
+      <Text>Successfully Created</Text>
+      <TouchableOpacity onPress={closeSuccessModal}>
+        <Text>Close</Text>
+      </TouchableOpacity>
+    </View>
+  </Modal>
+
+  {/* Error Modal */}
+  <Modal
+    animationType="slide"
+    transparent={true}
+    visible={isErrorModalVisible}
+    onRequestClose={closeErrorModal}>
+    <View style={styles.modalView}>
+      {/* Modal content */}
+      <Text>Error: Try Again</Text>
+      <TouchableOpacity onPress={closeErrorModal}>
+        <Text>Close</Text>
+      </TouchableOpacity>
+    </View>
+  </Modal>
+
 
     </SafeAreaView>
   )
