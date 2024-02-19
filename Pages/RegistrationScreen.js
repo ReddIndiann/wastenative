@@ -2,6 +2,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import {UserIcon,HashtagIcon,EnvelopeIcon,LockClosedIcon } from 'react-native-heroicons/outline'
+
 const RegistrationScreen = () => {
   const navigation = useNavigation();
   return (
