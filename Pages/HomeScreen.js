@@ -53,7 +53,7 @@ export default function HomeScreen() {
       long: coordinate.longitude,
     };
 
-    axios.post('http://191.168.2.230:5000/api/request', data, {
+    axios.post('http://172.20.10.5:5000/api/request', data, {
       timeout: 100000
     })
       .then(response => {
