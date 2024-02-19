@@ -7,7 +7,7 @@ import axios from 'axios';
 
 export default function HomeScreen() {
   const username = "Emmanuel Nyatepe";    
-  const userId = "6734yug347643b3834gf65";
+  const user_id = "6734yug347643b3834gf65";
   const [coordinate, setCoordinate] = useState(null);
   const number = "0567395234"; 
   const [type,setType]=useState("Plastic");
@@ -33,14 +33,16 @@ export default function HomeScreen() {
     }
     const data = {
       username,
-      userId,
+      user_id,
       number,
       type,
       lat: coordinate.latitude,
       long: coordinate.longitude,
     };
 
-    axios.post('http://191.168.2.230:5000/api/request', data)
+    axios.post('http://191.168.2.230:5000/api/request', data,{
+      timeout:100000
+    })
         .then(response => {
             console.log(response.data)
         })
