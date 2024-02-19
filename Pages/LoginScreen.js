@@ -1,10 +1,22 @@
-import React from 'react';
+import {useState} from 'react';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import {UserIcon,HashtagIcon,EnvelopeIcon,LockClosedIcon } from 'react-native-heroicons/outline'
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const Logincreen = () => {
   const navigation=useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => { 
+    const userData = {
+      email,
+      password
+    }
+    console.log(userData);
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
      <View style={styles.logoContainer}>
@@ -16,16 +28,16 @@ const Logincreen = () => {
         <View style={styles.formContainer}>
           <View style={styles.inputGroup}>
             <UserIcon color="black" size={20} style={styles.sideIcon}/>
-            <TextInput style={styles.input}/>
+            <TextInput onChange={setEmail} style={styles.input}/>
           </View>
           <View style={styles.inputGroup}>
-            <HashtagIcon color="black" size={20} style={styles.sideIcon}/>
-            <TextInput style={styles.input}/>
+            <LockClosedIcon color="black" size={20} style={styles.sideIcon}/>
+            <TextInput onChange={setPassword} style={styles.input}/>
           </View>
         </View>
         <View style={styles.loginGroup}>
           <Text style={styles.resetPwd}>Click the link below to reset login credentials {"\n"} Forgot Password</Text>
-          <TouchableOpacity style={styles.registerBtn} onPress={()=>navigation.navigate('homescreen')}>
+          <TouchableOpacity style={styles.registerBtn} onPress={handleLogin}>
              <Text style={{color:"#fff",fontSize:16}}>Log In</Text>
           </TouchableOpacity>
           <Text style={styles.signTxt} onPress={()=>navigation.navigate('signIn')}>Dont have an account? Sign Up </Text>

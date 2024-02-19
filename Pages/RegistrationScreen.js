@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import {UserIcon,HashtagIcon,EnvelopeIcon,LockClosedIcon } from 'react-native-heroicons/outline'
-
+import axios from "axios";
 const RegistrationScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
@@ -20,6 +20,14 @@ const RegistrationScreen = () => {
     }
     console.log(userData);
     
+    axios.post("http://172.20.10.5:5000/api/auth/register", userData)
+    .then(res => {
+      if (res.status === 200) {
+        console.log(res.data);
+        navigation.navigate('login');
+      }
+    })
+    .catch((err) => console.log(err));
   }
 
   return (
