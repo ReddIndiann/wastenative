@@ -2,7 +2,6 @@ import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, TouchableOpacit
 import React, { useEffect, useState,useContext } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
-import { Avatar } from "@react-native-material/core";
 import axios from 'axios';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import RNPickerSelect from "react-native-picker-select";
@@ -84,10 +83,7 @@ export default function HomeScreen() {
         {coordinate && <Marker coordinate={coordinate} />}
       </MapView>
       <View style={styles.float}>
-        <View style={styles.logoContainer}>
-          <Image source={require('../Images/EcoHaul.png')} style={styles.imageStyle} />
-          <Avatar label={username} size={45} style={{ marginRight: "3%", }} />
-        </View>
+        
         <TextInput style={styles.input} />
         <View style={styles.requestContainer}>
           <View style={styles.textContainer}>
