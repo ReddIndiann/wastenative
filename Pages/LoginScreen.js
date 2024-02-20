@@ -1,17 +1,19 @@
-import {useState} from 'react';
+import {useState,useContext} from 'react';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 import {UserIcon,HashtagIcon,EnvelopeIcon,LockClosedIcon } from 'react-native-heroicons/outline'
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../context/AuthContext';
 
 const Logincreen = () => {
+  const { login } = useContext(AuthContext);
   const navigation=useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => { 
-    const userData = {
+    {/*const userData = {
       email,
       password
     }
@@ -24,7 +26,7 @@ const Logincreen = () => {
           AsyncStorage.setItem('token',res.data.token);
           navigation.navigate('homescreen');
         }
-      })
+      })*/}
   }
 
   return (
@@ -47,7 +49,7 @@ const Logincreen = () => {
         </View>
         <View style={styles.loginGroup}>
           <Text style={styles.resetPwd}>Click the link below to reset login credentials {"\n"} Forgot Password</Text>
-          <TouchableOpacity style={styles.registerBtn} onPress={handleLogin}>
+          <TouchableOpacity style={styles.registerBtn} onPress={()=>{login()}}>
              <Text style={{color:"#fff",fontSize:16}}>Log In</Text>
           </TouchableOpacity>
           <Text style={styles.signTxt} onPress={()=>navigation.navigate('signIn')}>Dont have an account? Sign Up </Text>

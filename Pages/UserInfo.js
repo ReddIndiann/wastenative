@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function UserInfo() {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex:1,backgroundColor:"dodgerblue"}}>
       
     </SafeAreaView>
   )

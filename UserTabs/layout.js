@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons'; // Assuming you are using Expo, change this if not
+import { HomeIcon,ChatBubbleBottomCenterTextIcon,InboxStackIcon } from 'react-native-heroicons/outline';// Assuming you are using Expo, change this if not
 
 import HomeScreen from '../Pages/HomeScreen';
 import History from '../Pages/History';
@@ -8,12 +8,12 @@ import UserInfo from '../Pages/UserInfo';
 
 const screenOptions = {
   tabBarShowLabel: false,
-  headerShown: true,
+  headerShown: false,
   tabBarStyle: {
     height: '11%',
     position: 'absolute',
     elevation: 0.1,
-    backgroundColor: 'dodgerblue',
+    backgroundColor: '#179A72',
     width: '95%',
     bottom: '0.5%',
     left: '2%',
@@ -35,7 +35,7 @@ const Tabs = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="ios-home" color=
+            <HomeIcon color=
             'white' size={size} />
           ),
         }}
@@ -45,7 +45,7 @@ const Tabs = () => {
         component={History}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="ios-flame" color=
+            <InboxStackIcon color=
             "orange" size={size} />
           ),
         }}
@@ -55,7 +55,7 @@ const Tabs = () => {
         component={UserInfo}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="ios-cart" color="white" size={size} />
+            <ChatBubbleBottomCenterTextIcon color="white" size={size} />
           ),
         }}
       />

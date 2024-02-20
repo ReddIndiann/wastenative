@@ -1,5 +1,10 @@
 import Navigations from './Navigations';
+import { AuthProvider } from './context/AuthContext';
 
 export default function App() {
-  return <Navigations/>;
+  return (
+    <AuthProvider>
+      <Navigations/>
+    </AuthProvider>
+  );
 }
