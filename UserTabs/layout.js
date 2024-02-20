@@ -18,6 +18,8 @@ const screenOptions = {
     bottom: '0.5%',
     left: '2%',
     borderRadius: '13',
+    shadowColor: '#000',
+    bottom:"1%"
   },
 };
 
