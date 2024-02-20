@@ -11,9 +11,8 @@ import { AuthContext } from '../context/AuthContext';
 export default function HomeScreen() {
   const { userInfo } = useContext(AuthContext);
   const username = userInfo ? userInfo.username : 'DefaultUser';
-  const user = "6734yug347643b3834gf65";
+  const author = "emma@gmail.com";
   const [coordinate, setCoordinate] = useState(null);
-  const number = "0567395234";
   const [type, setType] = useState("Plastic");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
@@ -54,6 +53,7 @@ export default function HomeScreen() {
       type,
       lat: coordinate.latitude,
       long: coordinate.longitude,
+      author
     };
 
     axios.post('http://172.20.10.5:5000/api/request', data, {

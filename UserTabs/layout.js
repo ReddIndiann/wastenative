@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeIcon,ChatBubbleBottomCenterTextIcon,InboxStackIcon } from 'react-native-heroicons/outline';// Assuming you are using Expo, change this if not
+import { HomeIcon,ChatBubbleLeftIcon,InboxStackIcon } from 'react-native-heroicons/outline';// Assuming you are using Expo, change this if not
 
 import HomeScreen from '../Pages/HomeScreen';
 import History from '../Pages/History';
@@ -26,27 +26,27 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Shops"
+      initialRouteName="Home"
       screenOptions={screenOptions}
       tabBarActiveTint
     >
       <Tab.Screen
-        name="Shops"
-        component={HomeScreen}
+        name="History"
+        component={History}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <HomeIcon color=
+            <InboxStackIcon color=
             'white' size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name="Hot Deals"
-        component={History}
+        name="Home"
+        component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <InboxStackIcon color=
-            "orange" size={size} />
+            <HomeIcon color=
+            "white" size={size} />
           ),
         }}
       />
@@ -55,7 +55,7 @@ const Tabs = () => {
         component={UserInfo}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <ChatBubbleBottomCenterTextIcon color="white" size={size} />
+            <ChatBubbleLeftIcon color="white" size={size} />
           ),
         }}
       />
