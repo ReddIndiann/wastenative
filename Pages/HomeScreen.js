@@ -1,13 +1,27 @@
 import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, TouchableOpacity, Modal } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { Avatar } from "@react-native-material/core";
 import axios from 'axios';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import RNPickerSelect from "react-native-picker-select";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function HomeScreen() {
+
+  async function getToken() {
+    const storedToken = await AsyncStorage.getItem('token');
+    console.log(storedToken);
+    axios.post("hhtp://localhost:5000/userData", { token :storedToken})
+    .then(res => {
+      console.log(res.data);
+    })
+  }
+  useEffect(() => {
+    getToken();
+  }, []);
   const username = "Emmanuel Nyatepe";
   const user = "6734yug347643b3834gf65";
   const [coordinate, setCoordinate] = useState(null);

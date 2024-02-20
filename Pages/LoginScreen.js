@@ -3,6 +3,7 @@ import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, 
 import {UserIcon,HashtagIcon,EnvelopeIcon,LockClosedIcon } from 'react-native-heroicons/outline'
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Logincreen = () => {
   const navigation=useNavigation();
@@ -16,13 +17,14 @@ const Logincreen = () => {
     }
     console.log(userData);
     axios.post("http://172.20.10.5:5000/api/auth/login",userData)
-    .then((res)=>{
-      home
-  })
-  .catch((err)=>{
-      console.log(err)
-  })
-    
+    .then(res=>
+      {
+        if(res.data.message == "token sent successful"){
+          console.log(res.data);
+          AsyncStorage.setItem('token',res.data.token);
+          navigation.navigate('homescreen');
+        }
+      })
   }
 
   return (
@@ -36,11 +38,11 @@ const Logincreen = () => {
         <View style={styles.formContainer}>
           <View style={styles.inputGroup}>
             <UserIcon color="black" size={20} style={styles.sideIcon}/>
-            <TextInput onChange={setEmail} style={styles.input}/>
+            <TextInput onChangeText={(text)=>setEmail(text)} style={styles.input}/>
           </View>
           <View style={styles.inputGroup}>
             <LockClosedIcon color="black" size={20} style={styles.sideIcon}/>
-            <TextInput onChange={setPassword} style={styles.input}/>
+            <TextInput onChangeText={(text)=>setPassword(text)} style={styles.input}/>
           </View>
         </View>
         <View style={styles.loginGroup}>
