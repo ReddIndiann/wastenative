@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     const login = () => {
         setLoading(true);
         setUserToken("token");
-        AsyncStorage.setItem("userToken", userToken);
+        AsyncStorage.setItem("userToken", "token");
         setLoading(false);
     }
     const logout = () => {
