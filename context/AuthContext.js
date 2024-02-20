@@ -9,12 +9,15 @@ export const AuthProvider = ({ children }) => {
     const [isLoading, setLoading] = useState(true);
     const [userToken, setUserToken] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
+    const [userRequests, setUserRequests] = useState([]);
+
 
     const fetchUserRequests = (email) => {
         axios.get(`http://172.20.10.5:5000/api/request/userhistory?author=${email}`)
             .then(res => {
                 // Handle the response containing the requests
                 console.log("User requests:", res.data);
+                setUserRequests(res.data);
             })
             .catch(error => {
                 console.error("Error fetching user requests", error);
@@ -78,7 +81,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
  return (
-    <AuthContext.Provider value={{login,logout,isLoading,userToken,userInfo}}>
+    <AuthContext.Provider value={{login,logout,isLoading,userToken,userInfo,userRequests}}>
         {children}
     </AuthContext.Provider>
  );
