@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext,useEffect,useState } from "react";
+import axios from "axios";
 
 
 export const AuthContext = createContext();
@@ -9,11 +10,12 @@ export const AuthProvider = ({ children }) => {
     const [userToken, setUserToken] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
 
-    const login = () => {
+    const login = (email,password) => {
         setLoading(true);
-        axios.post("http://172.20.10.5:5000/api/auth/login",{username,password})
+        axios.post("http://172.20.10.5:5000/api/auth/login",{email,password})
         .then(res=>{
-            let userinfo = res.data
+            let userInfo = res.data
+            console.log(res.data)
             setUserInfo(userInfo);
             setUserToken(userInfo.data.token);
             AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));     
@@ -42,6 +44,8 @@ export const AuthProvider = ({ children }) => {
             if(userInfo){
                 setUserInfo(userInfo);
                 setUserToken(userToken);
+                console.log(userInfo)
+                console.log(userToken)
             }
 
             setLoading(false);
@@ -56,7 +60,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
  return (
-    <AuthContext.Provider value={{login,logout,isLoading,userToken}}>
+    <AuthContext.Provider value={{login,logout,isLoading,userToken,userInfo}}>
         {children}
     </AuthContext.Provider>
  );

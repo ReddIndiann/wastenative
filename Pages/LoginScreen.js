@@ -1,9 +1,7 @@
 import {useState,useContext} from 'react';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
-import {UserIcon,HashtagIcon,EnvelopeIcon,LockClosedIcon } from 'react-native-heroicons/outline'
+import {UserIcon,LockClosedIcon } from 'react-native-heroicons/outline'
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../context/AuthContext';
 
 const Logincreen = () => {
