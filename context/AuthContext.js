@@ -10,12 +10,26 @@ export const AuthProvider = ({ children }) => {
     const [userToken, setUserToken] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
 
+    const fetchUserRequests = (email) => {
+        axios.get(`http://172.20.10.5:5000/api/request/userhistory?author=${email}`)
+            .then(res => {
+                // Handle the response containing the requests
+                console.log("User requests:", res.data);
+            })
+            .catch(error => {
+                console.error("Error fetching user requests", error);
+            });
+    }
+
+   
+
     const login = (email,password) => {
         setLoading(true);
         axios.post("http://172.20.10.5:5000/api/auth/login",{email,password})
         .then(res=>{
             let userInfo = res.data
             console.log(res.data)
+            console.log(userInfo.email)
             setUserInfo(userInfo);
             setUserToken(userInfo.data.token);
             AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));     
@@ -24,6 +38,7 @@ export const AuthProvider = ({ children }) => {
         setUserToken("token");
         AsyncStorage.setItem("userToken", "token");
         setLoading(false);
+        fetchUserRequests(userInfo.email);
     }
     const logout = () => {
         setLoading(true);

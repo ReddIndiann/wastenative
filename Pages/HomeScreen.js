@@ -11,7 +11,7 @@ import { AuthContext } from '../context/AuthContext';
 export default function HomeScreen() {
   const { userInfo } = useContext(AuthContext);
   const username = userInfo ? userInfo.username : 'DefaultUser';
-  const author = "emma@gmail.com";
+  const author =  userInfo?.email;
   const [coordinate, setCoordinate] = useState(null);
   const [type, setType] = useState("Plastic");
   const [isModalVisible, setIsModalVisible] = useState(false);

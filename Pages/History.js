@@ -4,7 +4,9 @@ import React from 'react'
 export default function History() {
   return (
     <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
-      <Text>History</Text>
+      <View style={{width:"95%",height:"50%",backgroundColor:"dodgerblue"}}>
+
+      </View>
     </View>
   )
 }
