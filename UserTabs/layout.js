@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HomeIcon,ChatBubbleLeftIcon,InboxStackIcon } from 'react-native-heroicons/outline';// Assuming you are using Expo, change this if not
+import { HomeIcon,ChatBubbleLeftIcon,ClockIcon } from 'react-native-heroicons/outline';// Assuming you are using Expo, change this if not
 
 import HomeScreen from '../Pages/HomeScreen';
 import History from '../Pages/History';
@@ -35,7 +35,7 @@ const Tabs = () => {
         component={History}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <InboxStackIcon color=
+            <ClockIcon color=
             'white' size={size} />
           ),
         }}
