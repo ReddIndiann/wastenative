@@ -40,16 +40,16 @@ const Logincreen = () => {
         <View style={styles.formContainer}>
           <View style={styles.inputGroup}>
             <UserIcon color="black" size={20} style={styles.sideIcon}/>
-            <TextInput onChangeText={(text)=>setEmail(text)} style={styles.input}/>
+            <TextInput value={email} onChangeText={(text)=>setEmail(text)} style={styles.input}/>
           </View>
           <View style={styles.inputGroup}>
             <LockClosedIcon color="black" size={20} style={styles.sideIcon}/>
-            <TextInput onChangeText={(text)=>setPassword(text)} style={styles.input}/>
+            <TextInput value={password} onChangeText={(text)=>setPassword(text)} style={styles.input}/>
           </View>
         </View>
         <View style={styles.loginGroup}>
           <Text style={styles.resetPwd}>Click the link below to reset login credentials {"\n"} Forgot Password</Text>
-          <TouchableOpacity style={styles.registerBtn} onPress={()=>{login()}}>
+          <TouchableOpacity style={styles.registerBtn} onPress={()=>{login(email,password)}}>
              <Text style={{color:"#fff",fontSize:16}}>Log In</Text>
           </TouchableOpacity>
           <Text style={styles.signTxt} onPress={()=>navigation.navigate('signIn')}>Dont have an account? Sign Up </Text>
