@@ -38,7 +38,10 @@ export const AuthProvider = ({ children }) => {
         setUserToken("token");
         AsyncStorage.setItem("userToken", "token");
         setLoading(false);
-        fetchUserRequests(userInfo.email);
+        const userEmail = userInfo.email; // Assuming the email is directly on the userInfo object
+        if (userEmail) {
+            fetchUserRequests(userEmail);
+        }
     }
     const logout = () => {
         setLoading(true);
