@@ -82,7 +82,7 @@ export default function HomeScreen() {
       <MapView onPress={handleMapPress} provider={PROVIDER_GOOGLE} showsUserLocation={true} followsUserLocation={true} initialRegion={region} style={styles.map}>
         {coordinate && <Marker coordinate={coordinate} />}
       </MapView>
-      <View style={styles.float}>
+      
         
         <TextInput style={styles.input} />
         <View style={styles.requestContainer}>
@@ -94,7 +94,7 @@ export default function HomeScreen() {
             <Text style={{ color: "#fff" }}>Make Request</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      
 
       <Modal
         animationType="slide"
@@ -204,25 +204,15 @@ const styles = StyleSheet.create({
   map: {
     flex: 1
   },
-  float: {
-    position: "absolute",
-    width: "95%",
-    height: "25%",
-    backgroundColor: "#eeeee4",
-    alignSelf: "center",
-    top: "5%",
-    borderRadius: 10,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
+  
   logoContainer: {
     width: "100%",
-    height: "30%",
+    height: "10%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    position: "absolute",
   },
   imageStyle: {
     width: "40%",
@@ -232,18 +222,26 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "80%",
-    height: "25%",
+    height: "6%",
     borderRadius: 10,
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    position: "absolute",
+    alignSelf: "center",
+    top: "8%",
   },
   requestContainer: {
     width: "95%",
-    height: "40%",
-    marginTop: "1%",
+    height: "14%",
+    padding:10,
+    top: "16%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
+    alignSelf:"center",
+    position: "absolute",
+    backgroundColor:"#fff",
+    borderRadius:5
   },
   textContainer: {
     width: "60%",
