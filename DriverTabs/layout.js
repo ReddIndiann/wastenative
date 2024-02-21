@@ -3,8 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeIcon,ChatBubbleLeftIcon,ClockIcon } from 'react-native-heroicons/outline';// Assuming you are using Expo, change this if not
 
 import HomeScreen from './HomeScreen';
-import HaulRequest from './HaulRequest';
+import HaulRequests from './HaulRequests';
 import DriverInfo from './DriverInfo';
+import HaulRequests from './HaulRequests';
 
 const screenOptions = {
   tabBarShowLabel: false,
@@ -25,7 +26,7 @@ const screenOptions = {
 
 const Tab = createBottomTabNavigator();
 
-const Tabs = () => {
+const DriverTabs = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -33,8 +34,8 @@ const Tabs = () => {
       tabBarActiveTint
     >
       <Tab.Screen
-        name="History"
-        component={HaulRequest}
+        name="HaulRequests"
+        component={HaulRequests}
         options={{
           tabBarIcon: ({ color, size }) => (
             <ClockIcon color=
@@ -53,7 +54,7 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Cart"
+        name="Userinfo"
         component={DriverInfo}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -65,4 +66,4 @@ const Tabs = () => {
   );
 };
 
-export default Tabs;
+export default DriverTabs;
