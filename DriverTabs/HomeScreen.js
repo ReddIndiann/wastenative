@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 
 export default function HomeScreen() {
     const [requests,setRequest]= useState([]);
-    const [destination, setDestination] = useState(null);
+    const [destination, setDestination] = useState();
     const [currentLocation, setCurrentLocation] = useState(null);
     const [region, setRegion] = useState({
         latitude: 5.614818,
@@ -19,22 +19,26 @@ export default function HomeScreen() {
         setDestination({ latitude: parseFloat(request.lat), longitude: parseFloat(request.long) });
     };
 
-    const getLocation = async () => {
+   
+
+    useEffect(() => {
+        getRequests();
+        getCurrentLocation();
+    }, []);
+
+    const getCurrentLocation = async () => {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
-            console.log('Permission to access location was denied');
+            console.error('Permission to access location was denied');
             return;
         }
+
         let location = await Location.getCurrentPositionAsync({});
         setCurrentLocation({
             latitude: location.coords.latitude,
             longitude: location.coords.longitude
         });
-    }
-
-    useEffect(() => {
-        getRequests();
-    }, []);
+    };
 
     const getRequests = () => {
         axios.get('http://172.20.10.5:5000/api/request/allrequests')
@@ -50,7 +54,6 @@ export default function HomeScreen() {
   return (
     <View style={{ flex: 1 }}>
             <MapView 
-                onPress={handleMapPress} 
                 initialRegion={region} 
                 provider={PROVIDER_GOOGLE} 
                 showsUserLocation={true} 
