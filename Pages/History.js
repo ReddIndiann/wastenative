@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View ,Image,SafeAreaView} from 'react-native'
+import { StyleSheet, Text, View ,Image,SafeAreaView, TouchableOpacity} from 'react-native'
 import {useContext}from 'react'
 import { AuthContext } from '../context/AuthContext';
 import { Avatar } from "@react-native-material/core";
@@ -12,13 +12,30 @@ export default function History() {
       <View style={styles.logoContainer}>
           <Image source={require('../Images/EcoHaul.png')} style={styles.imageStyle} />
           <Avatar label={username} size={45} style={{ marginRight: "3%", }} />
+      </View>
+
+      <View style={{backgroundColor:'#E1EAE9',height:"17%",width:'90%',marginTop:"1%",borderRadius:5,display:'flex',flexDirection:'row',justifyContent:"space-between",alignItems:"center"}}>
+        <View style={{height:"99%",width:"55%",display:"flex",flexDirection:"column",alignItems:"flex-start",padding:8}}>
+          <Text style={{ fontSize:17}}>Welcome back,</Text>
+          <Text style={{fontSize:18,fontWeight:600,marginTop:"3%"}}>{username}</Text>
+          <Text style={{fontSize:12,marginTop:"13%",opacity:10}}>Excited to see you</Text>
         </View>
-      <View style={{width:"95%",height:"50%",backgroundColor:"dodgerblue"}}>
+        <View style={{height:"99%",width:"45%",display:"flex",justifyContent:"flex-end",alignItems:"flex-end"}}>
+          <TouchableOpacity style={{backgroundColor:"#179A72",height:"40%",width:"90%",marginBottom:"5%",marginRight:"5%",borderRadius:5,display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <Text style={{color:"white"}}>Make Request</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      <View style={{width:"95%",height:"60%",backgroundColor:"white",marginTop:"3%",display:"flex"}}>
+        <View style={{height:"10%",width:"90%",backgroundColor:"dodgerblue",display:"flex",flexDirection:"row"}}>
+          <Text style={{fontSize:17,fontWeight:600,marginTop:"3%"}}>Haul History</Text>
+        </View>
       {userRequests.map((request, index) => (
-                    <View key={index} style={{margin: 10, padding: 10, backgroundColor: 'white'}}>
-                        <Text>Type: {request.type}</Text>
-                        <Text>Date: {new Date(request.createdAt).toLocaleDateString()}</Text>
-                        <Text>Status: {request.status}</Text>
+                    <View key={index} style={{ backgroundColor: 'white',display:"flex",flexDirection:"row",justifyContent:"space-evenly"}}>
+                        <Text> {request.type}</Text>
+                        <Text> {new Date(request.createdAt).toLocaleDateString()}</Text>
+                        <Text> {request.status}</Text>
                     </View>
                 ))}
       </View>

@@ -1,5 +1,5 @@
 import {useState,useContext} from 'react';
-import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, Text, TextInput, TouchableOpacity, Image, ScrollView, Pressable } from 'react-native';
 import {UserIcon,LockClosedIcon } from 'react-native-heroicons/outline'
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from '../context/AuthContext';
@@ -50,7 +50,9 @@ const Logincreen = () => {
           <TouchableOpacity style={styles.registerBtn} onPress={()=>{login(email,password)}}>
              <Text style={{color:"#fff",fontSize:16}}>Log In</Text>
           </TouchableOpacity>
-          <Text style={styles.signTxt} onPress={()=>navigation.navigate('signIn')}>Dont have an account? Sign Up </Text>
+          <Pressable onPress={()=>navigation.navigate('signIn')}>
+          <Text style={styles.signTxt}>Dont have an account? Sign Up </Text>
+          </Pressable>
         </View>
     </SafeAreaView>
   );

@@ -10,14 +10,14 @@ const screenOptions = {
   tabBarShowLabel: false,
   headerShown: false,
   tabBarStyle: {
-    height: '11%',
+    height: '10%',
     position: 'absolute',
     elevation: 0.1,
     backgroundColor: '#179A72',
     width: '95%',
     bottom: '0.5%',
     left: '2%',
-    borderRadius: '13',
+    borderRadius: '16',
     shadowColor: '#000',
     bottom:"1%"
   },

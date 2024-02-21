@@ -79,7 +79,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.home}>
-      <MapView onPress={handleMapPress} initialRegion={region} style={styles.map}>
+      <MapView onPress={handleMapPress} showsUserLocation={true} followsUserLocation={true} initialRegion={region} style={styles.map}>
         {coordinate && <Marker coordinate={coordinate} />}
       </MapView>
       <View style={styles.float}>
