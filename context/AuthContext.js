@@ -30,14 +30,14 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         axios.post("http://172.20.10.5:5000/api/auth/login",{email,password})
         .then(res=>{
-            let userInfo = res.data
-            console.log(res.data)
-            console.log(userInfo.email)
+            const { email, role, token, username } = res.data;
+            console.log("API Response:", res.data);
+            const userInfo = { email, role, username };
             setUserInfo(userInfo);
-            setUserToken(userInfo.data.token);
+            setUserToken(token);
             AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));     
-            AsyncStorage.setItem("userToken",userInfo.data.token);   
-            const userEmail = userInfo.email;  // Adjust this if the structure is different
+            AsyncStorage.setItem("userToken",token);   
+            const userEmail = email;  // Adjust this if the structure is different
             if (userEmail) {
                 fetchUserRequests(userEmail);
             }
