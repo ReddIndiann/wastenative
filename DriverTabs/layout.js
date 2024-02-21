@@ -5,7 +5,7 @@ import { HomeIcon,ChatBubbleLeftIcon,ClockIcon } from 'react-native-heroicons/ou
 import HomeScreen from './HomeScreen';
 import HaulRequests from './HaulRequests';
 import DriverInfo from './DriverInfo';
-import HaulRequests from './HaulRequests';
+
 
 const screenOptions = {
   tabBarShowLabel: false,
