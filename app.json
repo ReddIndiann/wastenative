@@ -15,12 +15,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.EcoHaul",
+      "config": {
+        "googleMapsApiKey": "AIzaSyB_oFQ3l8sdvksjPmf-q5lK75YPv0N2Kp4"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package":"com.EcoHaul",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyB_oFQ3l8sdvksjPmf-q5lK75YPv0N2Kp4"
+        },
+        "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION", "CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
       }
     },
     "web": {

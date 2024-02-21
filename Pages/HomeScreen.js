@@ -79,7 +79,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.home}>
-      <MapView onPress={handleMapPress} showsUserLocation={true} followsUserLocation={true} initialRegion={region} style={styles.map}>
+      <MapView onPress={handleMapPress} provider={PROVIDER_GOOGLE} showsUserLocation={true} followsUserLocation={true} initialRegion={region} style={styles.map}>
         {coordinate && <Marker coordinate={coordinate} />}
       </MapView>
       <View style={styles.float}>
