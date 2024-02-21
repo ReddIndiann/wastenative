@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View ,Platform, PermissionsAndroid} from 'react-native'
 import {useState,useEffect} from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
 
 export default function HomeScreen() {
     const [region, setRegion] = useState(null);
@@ -21,7 +22,7 @@ export default function HomeScreen() {
     }, []);
     
     const getCurrentLocation = () => {
-        navigator.geolocation.getCurrentPosition(
+        Geolocation.getCurrentPosition(
             position => {
                 const currentRegion = {
                     latitude: position.coords.latitude,
@@ -34,7 +35,7 @@ export default function HomeScreen() {
             error => console.log(error),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
         );
-    };  
+    };
 
     const handleMapPress = (e) => {
         setCoordinate(e.nativeEvent.coordinate); // Store the coordinate object directly
