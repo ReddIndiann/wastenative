@@ -37,14 +37,17 @@ export const AuthProvider = ({ children }) => {
             setUserToken(userInfo.data.token);
             AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));     
             AsyncStorage.setItem("userToken",userInfo.data.token);   
+            const userEmail = userInfo.email;  // Adjust this if the structure is different
+            if (userEmail) {
+                fetchUserRequests(userEmail);
+            }
         })
-        setUserToken("token");
-        AsyncStorage.setItem("userToken", "token");
-        setLoading(false);
-        const userEmail = userInfo.email; // Assuming the email is directly on the userInfo object
-        if (userEmail) {
-            fetchUserRequests(userEmail);
-        }
+        .catch(error => {
+            console.error("Login error", error);
+        })
+        .finally(() => {
+            setLoading(false);
+        });
     }
     const logout = () => {
         setLoading(true);
