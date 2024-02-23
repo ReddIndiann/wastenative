@@ -4,6 +4,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import axios from 'axios';
 import { XMarkIcon } from 'react-native-heroicons/outline';
+import {CheckCircleIcon} from 'react-native-heroicons/solid';
 import RNPickerSelect from "react-native-picker-select";
 import { AuthContext } from '../context/AuthContext';
 
@@ -142,7 +143,7 @@ export default function HomeScreen() {
     transparent={true}
     visible={isSuccessModalVisible}
     onRequestClose={closeSuccessModal}>
-    <View style={styles.modalView}>
+    <View style={styles.SuccessmodalView}>
       {/* Modal content */}
       <Text>Successfully Created</Text>
       <TouchableOpacity onPress={closeSuccessModal}>
@@ -157,7 +158,7 @@ export default function HomeScreen() {
     transparent={true}
     visible={isErrorModalVisible}
     onRequestClose={closeErrorModal}>
-    <View style={styles.modalView}>
+    <View style={styles.SuccessmodalView}>
       {/* Modal content */}
       <Text>Error: Try Again</Text>
       <TouchableOpacity onPress={closeErrorModal}>
@@ -174,6 +175,25 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   home: {
     flex: 1,
+  },
+  SuccessmodalView: {
+    width: "30%",
+    height: "20%",
+    display: "flex",
+    alignSelf: "center",
+    justifyContent: "center",
+    marginTop: "55%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
   },
   sendBtn: {
     width: "83%",
