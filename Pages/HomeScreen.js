@@ -12,7 +12,7 @@ export default function HomeScreen() {
   const username = userInfo ? userInfo.username : 'DefaultUser';
   const author =  userInfo?.email;
   const [coordinate, setCoordinate] = useState(null);
-  const [type, setType] = useState("Plastic");
+  const [type, setType] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
@@ -60,6 +60,7 @@ export default function HomeScreen() {
     })
       .then(response => {
         if (response.status === 200) {
+          setCoordinate(null);
           setIsModalVisible(false);
           setIsSuccessModalVisible(true);
           setTimeout(() => {
