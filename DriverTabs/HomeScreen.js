@@ -1,10 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import {useState,useEffect} from 'react'
-import MapView, { PROVIDER_GOOGLE,Marker,Polyline } from 'react-native-maps';
+import { StyleSheet, Text, View ,Modal,TouchableOpacity} from 'react-native'
+import {useState,useEffect,useContext} from 'react'
+import MapView, { PROVIDER_GOOGLE,Marker} from 'react-native-maps';
+import { AuthContext } from '../context/AuthContext';
+import { XMarkIcon } from 'react-native-heroicons/outline';
 import axios from 'axios';
 import * as Location from 'expo-location';
 
 export default function HomeScreen() {
+    const {completerequest} = useContext(AuthContext);
     const [requests,setRequest]= useState([]);
     const [destination, setDestination] = useState();
     const [currentLocation, setCurrentLocation] = useState(null);
@@ -14,12 +17,17 @@ export default function HomeScreen() {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     });
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedMarkerData, setSelectedMarkerData] = useState({});
     
     const handleMarkerPress = (request) => {
-        setDestination({ latitude: parseFloat(request.lat), longitude: parseFloat(request.long) });
+        setSelectedMarkerData({ author: request.author, time: request.updatedAt, Type:request.type, requestId: request._id}); // Assuming these fields are available in your request data
+        setModalVisible(true);
     };
 
-   
+    const closeModal = () =>{
+        setModalVisible(false);
+    }
 
     useEffect(() => {
         getRequests();
@@ -51,6 +59,13 @@ export default function HomeScreen() {
         });
     }
 
+    const setCompleted = () => {
+       completerequest(selectedMarkerData.requestId);
+       console.log(selectedMarkerData.requestId)
+       console.log("completed");
+       closeModal();
+    }
+
   return (
     <View style={{ flex: 1 }}>
             <MapView 
@@ -70,15 +85,6 @@ export default function HomeScreen() {
                         onPress={() => handleMarkerPress(request)}
                     />
                 ))}
-
-                {currentLocation && destination && (
-                    <Polyline
-                        coordinates={[currentLocation, destination]}
-                        strokeColor="#000" // polyline color
-                        strokeWidth={3}
-                    />
-                )}
-                
             </MapView>
         </View>
   )
@@ -87,5 +93,38 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     map:{
         flex:1
+    },
+    modalView: {
+        backgroundColor: "dodgerblue",
+        width:"70%",
+        height:"30%",
+        borderRadius: 20,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        marginTop:"60%",
+        marginLeft:'15%'
+    },
+    buttonClose: {
+        backgroundColor: "red",
+        width:"15%",
+        height:"15%",
+        marginTop:"2%",
+        marginLeft:"80%",
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center"
     }
 })
