@@ -1,17 +1,21 @@
-import { StyleSheet, Text, View ,Image,SafeAreaView, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View ,Image,SafeAreaView, TouchableOpacity, Pressable} from 'react-native'
 import {useContext}from 'react'
 import { AuthContext } from '../context/AuthContext';
 import { Avatar } from "@react-native-material/core";
+import {useNavigation} from '@react-navigation/native';
 
 export default function History() {
   const {userRequests} = useContext(AuthContext);
   const { userInfo } = useContext(AuthContext);
+  const navigation = useNavigation();
   const username = userInfo ? userInfo.username : 'DefaultUser';
   return (
     <SafeAreaView style={{flex:1,alignItems:"center",backgroundColor:"#F4F6F6"}}>
       <View style={styles.logoContainer}>
           <Image source={require('../Images/EcoHaul.png')} style={styles.imageStyle} />
-          <Avatar label={username} size={45} style={{ marginRight: "3%", }} />
+          <Pressable onPress={()=>navigation.navigate('UserInfo')}>
+           <Avatar label={username} size={45} style={{ marginRight: "3%", }} />
+          </Pressable>
       </View>
 
       <View style={{backgroundColor:'#E1EAE9',height:"17%",width:'90%',marginTop:"1%",borderRadius:5,display:'flex',flexDirection:'row',justifyContent:"space-between",alignItems:"center"}}>
@@ -21,7 +25,7 @@ export default function History() {
           <Text style={{fontSize:12,marginTop:"13%",opacity:10}}>Excited to see you</Text>
         </View>
         <View style={{height:"99%",width:"45%",display:"flex",justifyContent:"flex-end",alignItems:"flex-end"}}>
-          <TouchableOpacity style={{backgroundColor:"#179A72",height:"40%",width:"90%",marginBottom:"5%",marginRight:"5%",borderRadius:5,display:"flex",justifyContent:"center",alignItems:"center"}}>
+          <TouchableOpacity onPress={()=>navigation.navigate("Home")} style={{backgroundColor:"#179A72",height:"40%",width:"90%",marginBottom:"5%",marginRight:"5%",borderRadius:5,display:"flex",justifyContent:"center",alignItems:"center"}}>
             <Text style={{color:"white"}}>Make Request</Text>
           </TouchableOpacity>
         </View>

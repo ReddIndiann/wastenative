@@ -112,7 +112,9 @@ const styles = StyleSheet.create({
   input:{
    width:"90%",
    height:"90%",
-   borderRadius:10
+   borderRadius:10,
+   fontSize:18,
+   marginLeft:"2%"
   },
   loginGroup:{
     position:'absolute',

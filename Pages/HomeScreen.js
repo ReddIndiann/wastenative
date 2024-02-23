@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   SuccessmodalView: {
     width: "50%",
-    height: "25%",
+    height: "30%",
     display: "flex",
     flexDirection: "column",
     alignSelf: "center",

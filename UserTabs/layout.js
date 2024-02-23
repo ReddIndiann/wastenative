@@ -5,7 +5,7 @@ import { HomeIcon,ChatBubbleLeftIcon,ClockIcon } from 'react-native-heroicons/ou
 
 import HomeScreen from '../Pages/HomeScreen';
 import History from '../Pages/History';
-import UserInfo from '../Pages/UserInfo';
+import ChatScreen from '../Chat/ChatScreen';
 
 const screenOptions = {
   tabBarShowLabel: false,
@@ -58,8 +58,8 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Cart"
-        component={UserInfo}
+        name="Chat"
+        component={ChatScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <View style={{ justifyContent: 'center', alignItems: 'center' ,marginTop:"25%"}}>

@@ -11,6 +11,7 @@ const AppStack = ({ initialRouteName }) => {
       <Stack.Screen options={{ headerShown: false }} name="Tabs" component={Tabs} />
       <Stack.Screen options={{ headerShown: false }} name="DriverTabs" component={DriverTabs} />
       <Stack.Screen options={{ headerShown: false }} name="InfoScreen" component={InfoScreen} />
+      <Stack.Screen options={{ headerShown: false }} name="UserInfo" component={UserInfo} />
     </Stack.Navigator>
   );
 };
