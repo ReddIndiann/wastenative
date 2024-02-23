@@ -4,10 +4,10 @@ import MapView, { PROVIDER_GOOGLE,Marker} from 'react-native-maps';
 import { AuthContext } from '../context/AuthContext';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
 
 export default function HomeScreen() {
-    const {completerequest} = useContext(AuthContext);
     const [requests,setRequest]= useState([]);
     const [destination, setDestination] = useState();
     const [currentLocation, setCurrentLocation] = useState(null);
@@ -19,10 +19,17 @@ export default function HomeScreen() {
     });
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedMarkerData, setSelectedMarkerData] = useState({});
+
+    const navigation = useNavigation();
     
     const handleMarkerPress = (request) => {
-        setSelectedMarkerData({ author: request.author, time: request.updatedAt, Type:request.type, requestId: request._id}); // Assuming these fields are available in your request data
-        setModalVisible(true);
+        navigation.navigate('InfoScreen', {
+            author: request.author,
+            time: request.updatedAt,
+            type: request.type,
+            requestId: request._id
+        });
+        console.log(request);
     };
 
     const closeModal = () =>{
@@ -57,13 +64,6 @@ export default function HomeScreen() {
             .catch(error => {
                 console.error('Error:', error);
         });
-    }
-
-    const setCompleted = () => {
-       completerequest(selectedMarkerData.requestId);
-       console.log(selectedMarkerData.requestId)
-       console.log("completed");
-       closeModal();
     }
 
   return (

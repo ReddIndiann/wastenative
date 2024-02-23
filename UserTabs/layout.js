@@ -11,16 +11,20 @@ const screenOptions = {
   headerShown: false,
   tabBarStyle: {
     height: '10%',
-    position: 'absolute',
     elevation: 0.1,
     backgroundColor: '#179A72',
     width: '95%',
-    bottom: '0.5%',
+    bottom: '2%',
     left: '2%',
     borderRadius: '16',
     shadowColor: '#000',
-    bottom:"1%"
+    display:"flex",
+    alignItems:"center",
+    justifyContent:"center",
   },
+  tabBarActiveTint:{
+    color:"white"
+  }
 };
 
 const Tab = createBottomTabNavigator();

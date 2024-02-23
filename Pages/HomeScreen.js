@@ -80,7 +80,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.home}>
+    <View style={styles.home}>
       <MapView onPress={handleMapPress} provider={PROVIDER_GOOGLE} showsUserLocation={true} followsUserLocation={true} initialRegion={region} style={styles.map}>
         {coordinate && <Marker coordinate={coordinate} />}
       </MapView>
@@ -169,7 +169,7 @@ export default function HomeScreen() {
   </Modal>
 
 
-    </SafeAreaView>
+    </View>
   )
 }
 

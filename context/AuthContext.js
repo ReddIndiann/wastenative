@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }) => {
 
     const completeRequest = async (requestId) => {
         try {
-            const response = await axios.post("http://172.20.10.5:5000/api/completeRequest", { _id: requestId });
+            const response = await axios.post("http://172.20.10.5:5000/api/drivers/status", { requestId });
             console.log("Request completed:", response.data);
             // You can add logic here to update your state or UI based on the response
         } catch (error) {
