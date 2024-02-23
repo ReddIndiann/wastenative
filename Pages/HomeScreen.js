@@ -146,7 +146,7 @@ export default function HomeScreen() {
     <View style={styles.SuccessmodalView}>
       {/* Modal content */}
       <CheckCircleIcon color="#4ECCA3"/>
-      <Text>Successfully Created</Text>
+      <Text>Response{"\n"}Submitted</Text>
       <TouchableOpacity onPress={closeSuccessModal}>
         <Text>Close</Text>
       </TouchableOpacity>
