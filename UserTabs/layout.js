@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HomeIcon,ChatBubbleLeftIcon,ClockIcon } from 'react-native-heroicons/outline';// Assuming you are using Expo, change this if not
 
@@ -22,9 +23,7 @@ const screenOptions = {
     alignItems:"center",
     justifyContent:"center",
   },
-  tabBarActiveTint:{
-    color:"white"
-  }
+  tabBarActiveTintColor:"white"
 };
 
 const Tab = createBottomTabNavigator();
@@ -41,8 +40,9 @@ const Tabs = () => {
         component={History}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <ClockIcon color=
-            'white' size={size} />
+          <View style={{ justifyContent: 'center', alignItems: 'center',marginTop:"25%" }}>
+            <ClockIcon color="white" size={size} />
+          </View>
           ),
         }}
       />
@@ -51,8 +51,9 @@ const Tabs = () => {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <HomeIcon color=
-            "white" size={size} />
+            <View style={{ justifyContent: 'center', alignItems: 'center',marginTop:"25%" }}>
+              <HomeIcon color="white" size={size} />
+            </View>
           ),
         }}
       />
@@ -61,7 +62,9 @@ const Tabs = () => {
         component={UserInfo}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <ChatBubbleLeftIcon color="white" size={size} />
+            <View style={{ justifyContent: 'center', alignItems: 'center' ,marginTop:"25%"}}>
+              <ChatBubbleLeftIcon color="white" size={size} />
+            </View>
           ),
         }}
       />

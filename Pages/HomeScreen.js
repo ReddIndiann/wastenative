@@ -145,8 +145,8 @@ export default function HomeScreen() {
     onRequestClose={closeSuccessModal}>
     <View style={styles.SuccessmodalView}>
       {/* Modal content */}
-      <CheckCircleIcon color="#4ECCA3"/>
-      <Text>Response{"\n"}Submitted</Text>
+      <CheckCircleIcon size={60} color="#4ECCA3"/>
+      <Text style={{fontSize:20,width:"80%",textAlign:"center"}}>Response{"\n"}Submitted</Text>
       <TouchableOpacity onPress={closeSuccessModal}>
         <Text>Close</Text>
       </TouchableOpacity>
@@ -178,8 +178,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   SuccessmodalView: {
-    width: "30%",
-    height: "20%",
+    width: "50%",
+    height: "25%",
     display: "flex",
     flexDirection: "column",
     alignSelf: "center",
