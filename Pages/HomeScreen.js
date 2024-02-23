@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     width: "30%",
     height: "20%",
     display: "flex",
+    flexDirection: "column",
     alignSelf: "center",
     justifyContent: "center",
     marginTop: "55%",
