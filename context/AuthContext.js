@@ -30,9 +30,9 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         axios.post("http://172.20.10.5:5000/api/auth/login",{email,password})
         .then(res=>{
-            const { email, role, token, username } = res.data;
+            const { email, role, token, username,comAssociate } = res.data;
             console.log("API Response:", res.data);
-            const userInfo = { email, role, username };
+            const userInfo = { email, role, username,comAssociate };
             setUserInfo(userInfo);
             setUserToken(token);
             AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));     
@@ -80,6 +80,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const completeRequest = async (requestId) => {
+        console.log(requestId)
         try {
             const response = await axios.post("http://172.20.10.5:5000/api/drivers/status", { requestId });
             console.log("Request completed:", response.data);
