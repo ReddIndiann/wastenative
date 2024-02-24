@@ -17,6 +17,7 @@
     "@react-navigation/stack": "^6.3.21",
     "axios": "^1.6.7",
     "expo": "~50.0.7",
+    "expo-location": "~16.5.3",
     "expo-status-bar": "~1.11.1",
     "react": "18.2.0",
     "react-native": "0.73.4",
@@ -25,7 +26,7 @@
     "react-native-modal": "^13.0.1",
     "react-native-picker-select": "^9.0.1",
     "react-native-vector-icons": "^10.0.3",
-    "expo-location": "~16.5.3"
+    "stream-chat-expo": "^5.24.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

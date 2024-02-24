@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext,useEffect,useState } from "react";
 import axios from "axios";
+import { StreamChat } from "stream-chat-expo";
 
 
 export const AuthContext = createContext();

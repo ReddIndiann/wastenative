@@ -1,23 +1,17 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {useEffect} from 'react'
+import {useNavigation} from '@react-navigation/stack'
 
 export default function ChatScreen() {
-  return (
-    <View style={{flex:1,alignItems:"center"}}>
-       <ScrollView horizontal={true}
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{
-        display:"flex",
-        flexDirection:"column",
-        alignItems:"center",
-        justifyContent:"center",
-        backgroundColor:"dodgerblue" ,
-        width:"90%"
-      }}
-      >
 
-       </ScrollView>
-    </View>
+  const navigation = useNavigation()
+
+  return (
+    <SafeAreaView style={{flex:1,alignItems:"center"}}>
+       <TouchableOpacity style={{backgroundColor:"dodgerblue",width:"30%",height:"30%"}} onPress={()=>navigation.navigate('CompanyList')}>
+         
+       </TouchableOpacity>
+    </SafeAreaView>
   )
 }
 

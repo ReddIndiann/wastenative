@@ -20,7 +20,9 @@ const RegistrationScreen = () => {
     }
     console.log(userData);
     
-    axios.post("http://172.20.10.5:5000/api/auth/register", userData)
+    axios.post("http://172.20.10.5:5000/api/auth/register", userData,{
+      timeout: 2000,
+    })
     .then(res => {
       if (res.status === 200) {
         console.log(res.data);
