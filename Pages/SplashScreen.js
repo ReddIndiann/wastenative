@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Image, Text, StyleSheet, Animated } from "react-native";
-import AppLogo from "../Images/Group 28.svg"; // Adjust the import according to your project structure
+import AppLogo from "../Images/EcoHaul.png"; // Adjust the import according to your project structure
 
 const SplashScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
@@ -21,41 +21,37 @@ const SplashScreen = ({ navigation }) => {
 
   return (
     <View style={styles.splashScreen} >
-      <Animated.View style={styles.logoContainer}>
-        <Animated.Image source={AppLogo} style={styles.appLogo} />
-        <View style={styles.textContainer}>
-          <Text style={styles.firstText}>Your Career,</Text>
-          <Text style={styles.secondText}>Streamlined</Text>
-        </View>
-      </Animated.View>
+      
+      <Image source={require('../Images/EcoHaulW.png')} style={styles.appLogo} /> 
+        
+      
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   splashScreen: {
-    position: "absolute",
-    top: 0,
-    left: 0,
     width: "100%",
     height: "100%",
-  
-    backgroundColor: "black",
+    flex: 1,
+    backgroundColor: "#1C3530",
     
     justifyContent: "center",
     alignItems: "center",
     // Add animation styles if needed
   },
   logoContainer: {
-    width: 300, // Adjust as needed
-    height: 200, // Adjust as needed
+    width: "100%", // Adjust as needed
+    height: "100%", // Adjust as needed
     justifyContent: "center",
     alignItems: "center",
+    display:"flex",
     // Add animation styles if needed
   },
   appLogo: {
-    width: 160, // Adjust as needed
-    height: 200, // Adjust as needed
+    width: "65%", // Adjust as needed
+    height: "15%", 
+    marginBottom:"2%"// Adjust as needed
     // Add animation styles if needed
   },
   textContainer: {
