@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.EcoHaul",
+      "bundleIdentifier": "com.wastenative",
       "config": {
         "googleMapsApiKey": "AIzaSyB_oFQ3l8sdvksjPmf-q5lK75YPv0N2Kp4"
       }
@@ -26,7 +26,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package":"com.EcoHaul",
+      "package":"com.wastenative",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyB_oFQ3l8sdvksjPmf-q5lK75YPv0N2Kp4"

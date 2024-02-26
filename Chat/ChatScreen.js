@@ -1,10 +1,10 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View,SafeAreaView } from 'react-native'
 import {useEffect} from 'react'
-import {useNavigation} from '@react-navigation/stack'
+
 
 export default function ChatScreen() {
 
-  const navigation = useNavigation()
+
 
   return (
     <SafeAreaView style={{flex:1,alignItems:"center"}}>

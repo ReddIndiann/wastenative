@@ -1,8 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext,useEffect,useState } from "react";
 import axios from "axios";
-import { StreamChat } from "stream-chat-expo";
-
 
 export const AuthContext = createContext();
 
@@ -14,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
 
     const fetchUserRequests = (email) => {
-        axios.get(`http://172.20.10.5:5000/api/request/userhistory?author=${email}`)
+        axios.get(`http://190.168.25.1:5000/api/request/userhistory?author=${email}`)
             .then(res => {
                 // Handle the response containing the requests
                 console.log("User requests:", res.data);
@@ -28,6 +26,7 @@ export const AuthProvider = ({ children }) => {
    
 
     const login = (email,password) => {
+        console.log("Logging in");
         setLoading(true);
         axios.post("http://172.20.10.5:5000/api/auth/login",{email,password})
         .then(res=>{
@@ -83,7 +82,7 @@ export const AuthProvider = ({ children }) => {
     const completeRequest = async (requestId) => {
         console.log(requestId)
         try {
-            const response = await axios.post("http://172.20.10.5:5000/api/drivers/status", { requestId });
+            const response = await axios.post("http://190.168.25.1:5000/api/drivers/status", { requestId });
             console.log("Request completed:", response.data);
             // You can add logic here to update your state or UI based on the response
         } catch (error) {
