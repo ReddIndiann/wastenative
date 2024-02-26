@@ -1,7 +1,8 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View,SafeAreaView,Image } from 'react-native'
-import {useEffect,useState} from 'react'
+import {useEffect,useState,useContext} from 'react'
 import axios from 'axios'
 import UserIcon from '../Images/userIcon.png'
+import { Avatar } from "@react-native-material/core";
 
 export default function ChatScreen() {
   const [companies, setCompanies] = useState([]);
@@ -19,10 +20,7 @@ export default function ChatScreen() {
         style={styles.item}
         onPress={() => navigation.navigate('CompanyDetails', { companyId: item.id })}
       >
-        <Image 
-          source={{ uri:UserIcon }} 
-          style={styles.image}
-        />
+        <Avatar label={item.username} size={45} style={{ marginRight: "3%", }}/>
         <Text style={styles.text}>{item.username}</Text>
       </TouchableOpacity>
     );
