@@ -56,9 +56,7 @@ export default function HomeScreen() {
       author
     };
 
-    axios.post('http://172.20.10.5:5000/api/request', data, {
-      timeout: 100000
-    })
+    axios.post('http://190.168.31.30:5000/api/request', data)
       .then(response => {
         if (response.status === 200) {
           setCoordinate(null);

@@ -61,6 +61,7 @@ const Tabs = () => {
         name="Chat"
         component={ChatScreen}
         options={{
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <View style={{ justifyContent: 'center', alignItems: 'center' ,marginTop:"25%"}}>
               <ChatBubbleLeftIcon color="white" size={size} />

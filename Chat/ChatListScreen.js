@@ -4,7 +4,9 @@ import React from 'react'
 export default function ChatListScreen() {
   return (
     <View>
-      <Text>ChatListScreen</Text>
+      <Text>
+        
+      </Text>
     </View>
   )
 }

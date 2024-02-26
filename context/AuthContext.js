@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
 
     const fetchUserRequests = (email) => {
-        axios.get(`http://190.168.25.1:5000/api/request/userhistory?author=${email}`)
+        axios.get(`http://190.168.31.30:5000/api/request/userhistory?author=${email}`)
             .then(res => {
                 // Handle the response containing the requests
                 console.log("User requests:", res.data);
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     const login = (email,password) => {
         console.log("Logging in");
         setLoading(true);
-        axios.post("http://172.20.10.5:5000/api/auth/login",{email,password})
+        axios.post("http://190.168.31.30:5000/api/auth/login",{email,password})
         .then(res=>{
             const { email, role, token, username,comAssociate } = res.data;
             console.log("API Response:", res.data);
@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
             AsyncStorage.setItem("userToken",token);   
             const userEmail = email;  // Adjust this if the structure is different
             if (userEmail) {
+                console.log("user email is parsed")
                 fetchUserRequests(userEmail);
             }
         })
@@ -82,7 +83,7 @@ export const AuthProvider = ({ children }) => {
     const completeRequest = async (requestId) => {
         console.log(requestId)
         try {
-            const response = await axios.post("http://190.168.25.1:5000/api/drivers/status", { requestId });
+            const response = await axios.post("http://190.168.31.30:5000/api/drivers/status", { requestId });
             console.log("Request completed:", response.data);
             // You can add logic here to update your state or UI based on the response
         } catch (error) {
