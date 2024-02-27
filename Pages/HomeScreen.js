@@ -56,7 +56,7 @@ export default function HomeScreen() {
       author
     };
 
-    axios.post('http://191.168.26.104:5000/api/request', data)
+    axios.post('http://190.168.4.77:5000/api/request', data)
       .then(response => {
         if (response.status === 200) {
           setCoordinate(null);
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
   requestBtn: {
     width: "35%",
     height: "60%",
-    backgroundColor: "#179A72",
+    backgroundColor: "#1c3530",
     borderRadius: 4,
     display: "flex",
     justifyContent: "center",

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View ,Image,SafeAreaView, TouchableOpacity, Pressable} from 'react-native'
+import { StyleSheet, Text, View ,Image,SafeAreaView, TouchableOpacity, Pressable,FlatList} from 'react-native'
 import {useContext}from 'react'
 import { AuthContext } from '../context/AuthContext';
 import { Avatar } from "@react-native-material/core";
@@ -9,6 +9,15 @@ export default function History() {
   const { userInfo } = useContext(AuthContext);
   const navigation = useNavigation();
   const username = userInfo ? userInfo.username : 'DefaultUser';
+
+  const renderItem = ({ item }) => (
+    <View style={{ backgroundColor: 'white', display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+      <Text> {item.type}</Text>
+      <Text> {new Date(item.createdAt).toLocaleDateString()}</Text>
+      <Text> {item.status}</Text>
+    </View>
+  );
+
   return (
     <SafeAreaView style={{flex:1,alignItems:"center",backgroundColor:"#F4F6F6"}}>
       <View style={styles.logoContainer}>
@@ -25,30 +34,27 @@ export default function History() {
           <Text style={{fontSize:12,marginTop:"13%",opacity:10}}>Excited to see you</Text>
         </View>
         <View style={{height:"99%",width:"45%",display:"flex",justifyContent:"flex-end",alignItems:"flex-end"}}>
-          <TouchableOpacity onPress={()=>navigation.navigate("Home")} style={{backgroundColor:"#179A72",height:"40%",width:"90%",marginBottom:"5%",marginRight:"5%",borderRadius:5,display:"flex",justifyContent:"center",alignItems:"center"}}>
+          <TouchableOpacity onPress={()=>navigation.navigate("Home")} style={{backgroundColor:"#1c3530",height:"40%",width:"90%",marginBottom:"5%",marginRight:"5%",borderRadius:5,display:"flex",justifyContent:"center",alignItems:"center"}}>
             <Text style={{color:"white"}}>Make Request</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <View style={{width:"95%",height:"60%",backgroundColor:"white",marginTop:"3%",display:"flex"}}>
-        <View style={{height:"10%",width:"90%",backgroundColor:"dodgerblue",display:"flex",flexDirection:"row",justifyContent:"space-evenly"}}>
-          <Text style={{fontSize:17,fontWeight:600,marginTop:"3%"}}>Haul History</Text>
+        <View style={{height:"10%",width:"90%",paddingLeft:"7%",display:"flex",flexDirection:"row",paddingRight:"5%",justifyContent:"space-between",alignItems:"center"}}>
+          <Text style={{fontSize:17,fontWeight:600}}>Haul History</Text>
           <Text>All</Text>
         </View>
-        <View style={{display:'flex',flexDirection:"row",justifyContent:"space-evenly",alignItems:'center',backgroundColor:"black"}}>
-           <Text>Haul ID</Text>
+        <View style={{display:'flex',flexDirection:"row",justifyContent:"space-between",alignItems:'center',backgroundColor:"white",paddingLeft:"7%",paddingRight:"15%"}}>
            <Text>Haul Type</Text>
            <Text>Time</Text>
-           <Text>status</Text>
+           <Text>Status</Text>
         </View>
-      {userRequests.map((request, index) => (
-                    <View key={index} style={{ backgroundColor: 'white',display:"flex",flexDirection:"row",justifyContent:"space-evenly"}}>
-                        <Text> {request.type}</Text>
-                        <Text> {new Date(request.createdAt).toLocaleDateString()}</Text>
-                        <Text> {request.status}</Text>
-                    </View>
-                ))}
+        <FlatList
+          data={userRequests}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     </SafeAreaView>
   )
