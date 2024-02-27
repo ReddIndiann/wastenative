@@ -40,37 +40,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // Add animation styles if needed
   },
-  logoContainer: {
-    width: "100%", // Adjust as needed
-    height: "100%", // Adjust as needed
-    justifyContent: "center",
-    alignItems: "center",
-    display:"flex",
-    // Add animation styles if needed
-  },
   appLogo: {
-    width: "65%", // Adjust as needed
+    width: "85%", // Adjust as needed
     height: "15%", 
     marginBottom:"2%"// Adjust as needed
     // Add animation styles if needed
-  },
-  textContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    // Add animation styles if needed
-  },
-  firstText: {
-    color: "#008ed8",
-    fontSize: 20,
-    marginRight: 4,
-    // Add fontFamily if needed
-  },
-  secondText: {
-    color: "#424242",
-    fontSize: 20,
-    marginLeft: 4,
-    // Add fontFamily if needed
   }
 });
 

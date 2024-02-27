@@ -32,8 +32,15 @@ export default function History() {
       </View>
 
       <View style={{width:"95%",height:"60%",backgroundColor:"white",marginTop:"3%",display:"flex"}}>
-        <View style={{height:"10%",width:"90%",backgroundColor:"dodgerblue",display:"flex",flexDirection:"row"}}>
+        <View style={{height:"10%",width:"90%",backgroundColor:"dodgerblue",display:"flex",flexDirection:"row",justifyContent:"space-evenly"}}>
           <Text style={{fontSize:17,fontWeight:600,marginTop:"3%"}}>Haul History</Text>
+          <Text>All</Text>
+        </View>
+        <View style={{display:'flex',flexDirection:"row",justifyContent:"space-evenly",alignItems:'center',backgroundColor:"black"}}>
+           <Text>Haul ID</Text>
+           <Text>Haul Type</Text>
+           <Text>Time</Text>
+           <Text>status</Text>
         </View>
       {userRequests.map((request, index) => (
                     <View key={index} style={{ backgroundColor: 'white',display:"flex",flexDirection:"row",justifyContent:"space-evenly"}}>
