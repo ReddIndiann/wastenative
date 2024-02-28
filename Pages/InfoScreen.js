@@ -2,12 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity,Image, Pressable } from 'react-native';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import {useNavigation} from '@react-navigation/stack'
+
 
 const InfoScreen = ({ route, navigation }) => {
     const {completeRequest} = useContext(AuthContext);
     const { author, time, type, requestId } = route.params;
-    const navigation = useNavigation();
     const setCompleted = () => {
         console.log(requestId);
         completeRequest(requestId);
@@ -18,10 +17,10 @@ const InfoScreen = ({ route, navigation }) => {
         <View style={styles.container}>
             <Image source={require('../Images/EcoHaul.png')} style={{marginTop:"15%"}}/>
             <Text style={{ color:"#6e6d7a" }}>View Selected Haul Details</Text>
-            <View style={{marginTop:"4%",width:"92%",height:"35%",backgroundColor:"#e1eae9"}}>
-
+            <View style={{marginTop:"4%",width:"92%",height:"35%",backgroundColor:"#e1eae9",display:"flex",flexDirection:"column"}}>
+              <Text>Haul Details</Text>
             </View>
-            <Pressable >
+            <Pressable onPress={()=>navigation.navigate('Home')} >
                 <Text style={{marginTop:"5%",fontWeight:500}}>
                     Go Back to Map
                 </Text>

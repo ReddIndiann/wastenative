@@ -60,7 +60,7 @@ export default function HomeScreen() {
     };
 
     const getRequests = () => {
-        axios.get('http://190.168.4.77:5000/api/request/allrequests')
+        axios.get('http://172.20.10.5:5000/api/request/allrequests')
             .then(response => {
                 setRequest(response.data);
                 console.log('Success:', response.data);
