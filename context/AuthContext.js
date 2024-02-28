@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
 
     const fetchUserRequests = (email) => {
-        axios.get(`http://190.168.4.77:5000/api/request/userhistory?author=${email}`)
+        axios.get(`http://172.20.10.5:5000/api/request/userhistory?author=${email}`)
             .then(res => {
                 // Handle the response containing the requests
                 console.log("User requests:", res.data);
@@ -28,11 +28,11 @@ export const AuthProvider = ({ children }) => {
     const login = (email,password) => {
         console.log("Logging in");
         setLoading(true);
-        axios.post("http://190.168.4.77:5000/api/auth/login",{email,password})
+        axios.post("http://172.20.10.5:5000/api/auth/login",{email,password})
         .then(res=>{
-            const { email, role, token, username,comAssociate ,phone} = res.data;
+            const { email, role, token, username,comAssociate ,phone,id} = res.data;
             console.log("API Response:", res.data);
-            const userInfo = { email, role, username,comAssociate,phone };
+            const userInfo = { email, role, username,comAssociate,phone,id };
             setUserInfo(userInfo);
             setUserToken(token);
             AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));     
@@ -80,10 +80,10 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const completeRequest = async (requestId) => {
+    const completeRequest = async (requestId,comAssociate) => {
         console.log(requestId)
         try {
-            const response = await axios.post("http://191.168.26.104:5000/api/drivers/status", { requestId });
+            const response = await axios.post("http://172.20.10.5:5000/api/drivers/status", { requestId,comAssociate });
             console.log("Request completed:", response.data);
             // You can add logic here to update your state or UI based on the response
         } catch (error) {

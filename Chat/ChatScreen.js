@@ -7,7 +7,7 @@ import { Avatar } from "@react-native-material/core";
 export default function ChatScreen() {
   const [companies, setCompanies] = useState([]);
   useEffect(() => {
-    axios.get('http://190.168.4.77:5000/api/drivers/companies')
+    axios.get('http://172.20.10.5:5000/api/drivers/companies')
     .then(res=>{
       console.log(res.data)
       setCompanies(res.data)
