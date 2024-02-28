@@ -1,7 +1,9 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, TouchableOpacity, Modal } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, TouchableOpacity, Modal, Dimensions } from 'react-native'
 import React, { useEffect, useState,useContext } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+
 import axios from 'axios';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import {CheckCircleIcon} from 'react-native-heroicons/solid';
@@ -79,12 +81,42 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.home}>
+     
       <MapView onPress={handleMapPress} provider={PROVIDER_GOOGLE} showsUserLocation={true} followsUserLocation={true} initialRegion={region} style={styles.map}>
         {coordinate && <Marker coordinate={coordinate} />}
       </MapView>
       
-        
-        <TextInput style={styles.input} />
+      <View style={styles.searchContainer}>
+      <GooglePlacesAutocomplete
+  placeholder='Search for location'
+  fetchDetails={true}
+  style={styles.inputt}
+  GooglePlacesSearchQuery={{
+    rankby: 'distance'
+  }}
+  onPress={(data, details = null) => {
+    // 'details' is provided when fetchDetails = true
+    console.log(data, details);
+    setCoordinate({
+      latitude: details.geometry.location.lat,
+      longitude: details.geometry.location.lng
+    });
+    setRegion({
+      ...region,
+      latitude: details.geometry.location.lat,
+      longitude: details.geometry.location.lng,
+    });
+  }}
+  query={{
+    key: 'AIzaSyB_oFQ3l8sdvksjPmf-q5lK75YPv0N2Kp4',
+    language: 'en',
+    types: 'geocode', // or 'establishment', 'regions', etc.
+  }}
+ 
+  
+/></View>
+
+       
         <View style={styles.requestContainer}>
           <View style={styles.textContainer}>
             <Text style={styles.txt1}>Put in a Haul Request</Text>
@@ -175,6 +207,26 @@ const styles = StyleSheet.create({
   home: {
     flex: 1,
   },
+  searchContainer:{
+    position:'absolute',
+    width : "90%",
+    marginTop:50,
+    marginLeft:20,
+   backgroundColor:"white",
+   shadowColor:"black",
+   shadowOffset:{width:2,height:2},
+   shadowOpacity:0.5,
+   shadowRadius:4,
+   elevation:4,
+   padding:1,
+  
+  },
+  inputt:{
+borderColor:"#888",
+borderWidth:1,
+margin:30
+  }
+,
   SuccessmodalView: {
     width: "50%",
     height: "30%",
@@ -193,7 +245,8 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5
+    elevation: 5,
+    borderRadius:8,
   },
   sendBtn: {
     width: "83%",
