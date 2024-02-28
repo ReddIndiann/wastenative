@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, TouchableOpacity, Modal, Dimensions } from 'react-native'
-import React, { useEffect, useState,useContext } from 'react'
+import React, { useEffect, useState,useContext,useRef } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
@@ -19,6 +19,7 @@ export default function HomeScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+  const mapRef = useRef(null);
 
   const closeModal = () => {
     setIsModalVisible(false); // Hide modal
@@ -26,6 +27,8 @@ export default function HomeScreen() {
   const closeSuccessModal = () => setIsSuccessModalVisible(false);
   const closeErrorModal = () => setIsErrorModalVisible(false);
 
+
+  
   const [region, setRegion] = useState({
     latitude: 5.614818,
     longitude: -0.205874,
@@ -82,9 +85,18 @@ export default function HomeScreen() {
   return (
     <View style={styles.home}>
      
-      <MapView onPress={handleMapPress} provider={PROVIDER_GOOGLE} showsUserLocation={true} followsUserLocation={true} initialRegion={region} style={styles.map}>
-        {coordinate && <Marker coordinate={coordinate} />}
-      </MapView>
+     <MapView
+  ref={mapRef}
+  onPress={handleMapPress}
+  provider={PROVIDER_GOOGLE}
+  showsUserLocation={true}
+  followsUserLocation={true}
+  initialRegion={region}
+  style={styles.map}
+>
+  {coordinate && <Marker coordinate={coordinate} />}
+</MapView>
+
       
       <View style={styles.searchContainer}>
       <GooglePlacesAutocomplete
@@ -96,25 +108,24 @@ export default function HomeScreen() {
   }}
   onPress={(data, details = null) => {
     // 'details' is provided when fetchDetails = true
-    console.log(data, details);
-    setCoordinate({
-      latitude: details.geometry.location.lat,
-      longitude: details.geometry.location.lng
-    });
-    setRegion({
-      ...region,
-      latitude: details.geometry.location.lat,
-      longitude: details.geometry.location.lng,
-    });
+    if (details) {
+      const newRegion = {
+        latitude: details.geometry.location.lat,
+        longitude: details.geometry.location.lng,
+        latitudeDelta: 0.0922, // or a suitable delta value
+        longitudeDelta: 0.0421, // or a suitable delta value
+      };
+      setRegion(newRegion); // Update region state
+      mapRef.current.animateCamera({center: newRegion}, { duration: 1000 }); // Animate camera if you want
+    }
   }}
   query={{
     key: 'AIzaSyB_oFQ3l8sdvksjPmf-q5lK75YPv0N2Kp4',
     language: 'en',
     types: 'geocode', // or 'establishment', 'regions', etc.
   }}
- 
-  
-/></View>
+/>
+</View>
 
        
         <View style={styles.requestContainer}>
