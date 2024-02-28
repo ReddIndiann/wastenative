@@ -13,7 +13,7 @@ const screenOptions = {
   tabBarStyle: {
     height: '10%',
     elevation: 0.1,
-    backgroundColor: '#179A72',
+    backgroundColor: '#1c3530',
     width: '95%',
     bottom: '2%',
     left: '2%',

@@ -53,6 +53,10 @@ export default function HomeScreen() {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude
         });
+        setRegion({
+            latitude: location.coords.latitude,
+            longitude:location.coords.longitude,
+        })
     };
 
     const getRequests = () => {
