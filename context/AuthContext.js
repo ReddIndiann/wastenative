@@ -9,10 +9,11 @@ export const AuthProvider = ({ children }) => {
     const [userToken, setUserToken] = useState(null);
     const [userInfo, setUserInfo] = useState(null);
     const [userRequests, setUserRequests] = useState([]);
+    const [streamToken, setStreamToken] = useState(null);
 
 
     const fetchUserRequests = (email) => {
-        axios.get(`http://190.168.4.77:5000/api/request/userhistory?author=${email}`)
+        axios.get(`http://172.20.10.5:5000/api/request/userhistory?author=${email}`)
             .then(res => {
                 // Handle the response containing the requests
                 console.log("User requests:", res.data);
@@ -28,13 +29,15 @@ export const AuthProvider = ({ children }) => {
     const login = (email,password) => {
         console.log("Logging in");
         setLoading(true);
-        axios.post("http://190.168.4.77:5000/api/auth/login",{email,password})
+        axios.post("http://172.20.10.5:5000/api/auth/login",{email,password})
         .then(res=>{
-            const { email, role, token, username,comAssociate ,phone,id} = res.data;
+            const { email, role, token, username,comAssociate ,phone,id,streamToken} = res.data;
             console.log("API Response:", res.data);
             const userInfo = { email, role, username,comAssociate,phone,id };
             setUserInfo(userInfo);
             setUserToken(token);
+            setStreamToken(streamToken);
+            console.log(streamToken);
             AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));     
             AsyncStorage.setItem("userToken",token);   
             const userEmail = email;  // Adjust this if the structure is different
@@ -96,7 +99,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
  return (
-    <AuthContext.Provider value={{login,logout,isLoading,userToken,userInfo,userRequests,completeRequest}}>
+    <AuthContext.Provider value={{login,logout,isLoading,userToken,userInfo,userRequests,completeRequest,streamToken}}>
         {children}
     </AuthContext.Provider>
  );
