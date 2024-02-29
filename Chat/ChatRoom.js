@@ -1,12 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { Channel, MessageList, MessageInput } from 'stream-chat-expo';
+import { useRoute } from '@react-navigation/native';
 
 export default function ChatRoom() {
+  const route = useRoute();
+  const { channel } = route.params; // Extracting channel from navigation params
+
   return (
-    <View>
-      
-    </View>
-  )
+    <Channel channel={channel}>
+      <MessageList />
+      <MessageInput />
+    </Channel>
+  );
 }
 
-const styles = StyleSheet.create({})
+// You can add styles if needed

@@ -13,7 +13,10 @@ const Channels = () => {
   }
   return (
     <View style={styles.container}>
-      <ChannelList onSelect={(channel)=>setChannel(channel)} />
+      <ChannelList onSelect={(channel) => {
+        setChannel(channel);
+        navigation.navigate('ChatRoom', { channel });
+      }} />
     </View>
   );
 };

@@ -21,13 +21,13 @@ export default function ChatScreen() {
     console.log(myId,receiverId)
   }, [])
 
-  const startChannel = async (Id) => {
-    console.log("Start channel with ID:", Id,myId);
-    const channel = client.channel('messaging', {members:[myId,Id]} )
+  const startChannel = async (userId) => {
+    const channel = client.channel('messaging', {
+      members: [myId, userId],
+    });
     await channel.watch();
-    console.log("Start channel with ID:", Id);
-    console.log("Start channel")
-  }
+    navigation.navigate('ChatRoom', { channel }); // Navigate to ChatRoom with the channel
+  };
 
   const renderItem = ({ item }) => {
     return (
