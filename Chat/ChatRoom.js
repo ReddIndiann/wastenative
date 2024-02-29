@@ -1,12 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-export default function ChatListScreen() {
+export default function ChatRoom() {
   return (
     <View>
-      <Text>
-        
-      </Text>
+      
     </View>
   )
 }
