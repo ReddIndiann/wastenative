@@ -11,9 +11,10 @@ export default function HomeScreen() {
     const [requests,setRequest]= useState([]);
     const [destination, setDestination] = useState();
     const [currentLocation, setCurrentLocation] = useState(null);
+    const {areaAssigned} = useContext(AuthContext);
     const [region, setRegion] = useState({
-        latitude: 5.614818,
-        longitude: -0.205874,
+        latitude: areaAssigned.center.lat,
+        longitude: areaAssigned.center.long,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
     });
@@ -89,6 +90,14 @@ export default function HomeScreen() {
                         onPress={() => handleMarkerPress(request)}
                     />
                 ))}
+
+                <Circle
+                    center={areaAssigned.center}
+                    radius={areaAssigned.radius}
+                    strokeWidth={2}
+                    strokeColor="rgba(0,0,255,0.5)"
+                    fillColor="rgba(0,0,255,0.3)"
+                />
             </MapView>
         </View>
   )
