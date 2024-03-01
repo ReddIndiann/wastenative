@@ -5,7 +5,7 @@ import { HomeIcon,ChatBubbleLeftIcon,ClockIcon } from 'react-native-heroicons/ou
 
 import HomeScreen from '../Pages/HomeScreen';
 import History from '../Pages/History';
-import ChatScreen from '../Chat/ChatScreen';
+import ChatStackScreen from '../Chat/layout';
 
 const screenOptions = {
   tabBarShowLabel: false,
@@ -59,9 +59,10 @@ const Tabs = () => {
       />
       <Tab.Screen
         name="Chat"
-        component={ChatScreen}
+        component={ChatStackScreen} 
+        initialRouteName="Channel"
         options={{
-          headerShown: true,
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <View style={{ justifyContent: 'center', alignItems: 'center' ,marginTop:"25%"}}>
               <ChatBubbleLeftIcon color="white" size={size} />
