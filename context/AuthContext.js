@@ -31,9 +31,10 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         axios.post("http://172.20.10.5:5000/api/auth/login",{email,password})
         .then(res=>{
-            const { email, role, token, username,comAssociate ,phone,id,streamToken} = res.data;
+            const { email, role, token, username,comAssociate ,phone,id,streamToken,areaAssigned} = res.data;
             console.log("API Response:", res.data);
-            const userInfo = { email, role, username,comAssociate,phone,id };
+            console.log(areaAssigned);
+            const userInfo = { email, role, username,comAssociate,phone,id,areaAssigned };
             setUserInfo(userInfo);
             setUserToken(token);
             setStreamToken(streamToken);
