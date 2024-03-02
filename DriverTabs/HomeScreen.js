@@ -12,12 +12,13 @@ export default function HomeScreen() {
     const [destination, setDestination] = useState();
     const [currentLocation, setCurrentLocation] = useState(null);
     const {areaAssigned} = useContext(AuthContext);
+    console.log(areaAssigned)
     const [region, setRegion] = useState({
-        latitude: areaAssigned.center.lat,
-        longitude: areaAssigned.center.long,
+        latitude: 5.614818,
+        longitude: -0.205874,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
-    });
+      });
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedMarkerData, setSelectedMarkerData] = useState({});
 
@@ -61,7 +62,7 @@ export default function HomeScreen() {
     };
 
     const getRequests = () => {
-        axios.get('http://192.168.43.190:5000/api/request/allrequests')
+        axios.get('http://172.20.10.9:5000/api/request/allrequests')
             .then(response => {
                 setRequest(response.data);
                 console.log('Success:', response.data);
@@ -91,13 +92,13 @@ export default function HomeScreen() {
                     />
                 ))}
 
-                <Circle
+               {/* <Circle
                     center={areaAssigned.center}
                     radius={areaAssigned.radius}
                     strokeWidth={2}
                     strokeColor="rgba(0,0,255,0.5)"
                     fillColor="rgba(0,0,255,0.3)"
-                />
+                />*/}
             </MapView>
         </View>
   )
