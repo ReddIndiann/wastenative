@@ -92,10 +92,8 @@ export default function HomeScreen() {
         latitudeDelta: 0.0922,  // You can adjust these deltas as needed
         longitudeDelta: 0.0421,
       };
-
       setCoordinate(newCoordinate);
       setRegion(newRegion);
-
       // Animate map to the new region
       if (mapRef.current) {
         mapRef.current.animateToRegion(newRegion, 1000);  // 1000 is the duration in ms
@@ -104,13 +102,12 @@ export default function HomeScreen() {
   };
   return (
     <View style={styles.home}>
-       <MapView 
+      <MapView 
         ref={mapRef}
         onPress={onPlaceSelected}
         provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
         followsUserLocation={true}
-        
         region={region}  // Use 'region' instead of 'initialRegion' to allow dynamic changes
         style={styles.map}>
         {/* ... other components remain the same */}

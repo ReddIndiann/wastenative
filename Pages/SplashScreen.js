@@ -22,7 +22,7 @@ const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.splashScreen} >
       
-      <Image source={require('../Images/EcoHaulW.png')} style={styles.appLogo} /> 
+      <Image source={require('../Images/logoSVG.svg')} style={styles.appLogo} /> 
         
       
     </View>
