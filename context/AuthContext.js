@@ -11,9 +11,8 @@ export const AuthProvider = ({ children }) => {
     const [userRequests, setUserRequests] = useState([]);
     const [streamToken, setStreamToken] = useState(null);
 
-
     const fetchUserRequests = (email) => {
-        axios.get(`http://190.168.4.77:5000/api/request/userhistory?author=${email}`)
+        axios.get(`http://172.20.10.5:5000/api/request/userhistory?author=${email}`)
             .then(res => {
                 // Handle the response containing the requests
                 console.log("User requests:", res.data);
@@ -24,12 +23,10 @@ export const AuthProvider = ({ children }) => {
             });
     }
 
-    
-
     const login = (email,password) => {
         console.log("Logging in");
         setLoading(true);
-        axios.post("http://190.168.4.77:5000/api/auth/login",{email,password})
+        axios.post("http://172.20.10.5:5000/api/auth/login",{email,password})
         .then(res=>{
             const { email, role, token, username,comAssociate ,phone,id,streamToken,areaAssigned} = res.data;
             console.log("API Response:", res.data);
