@@ -13,7 +13,7 @@ export default function ChatScreen() {
   const myId = userInfo.id;
   const receiverId = companies._id;
   useEffect(() => {
-    axios.get('http://172.20.10.5:5000/api/drivers/companies')
+    axios.get('http://191.168.11.42:5000/api/drivers/companies')
     .then(res=>{
       console.log(res.data)
       setCompanies(res.data)
@@ -22,12 +22,19 @@ export default function ChatScreen() {
   }, [])
 
   const startChannel = async (userId) => {
-    const channel = client.channel('messaging', {
-      members: [myId, userId],
-    });
-    await channel.watch();
-    navigation.navigate('ChatRoom', { channel }); // Navigate to ChatRoom with the channel
-  };
+    const stringUserId = String(userId);
+    try {
+        const channel = client.channel('messaging', {
+          members: [myId, stringUserId],
+        });
+        console.log("myId:", myId, "stringUserId:", stringUserId, "channel:", channel)
+        await channel.watch();
+        navigation.navigate('ChatRoom', { channel }); // Navigate to ChatRoom with the channel
+    } catch (error) {
+        console.error("Error starting channel:", error);
+        console.log("myId:", myId, "stringUserId:", stringUserId)
+    }
+};
 
   const renderItem = ({ item }) => {
     return (
