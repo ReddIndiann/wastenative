@@ -14,30 +14,32 @@ const client = StreamChat.getInstance(API_KEY);
 const ChatStack = createStackNavigator();
 
 const ChatStackScreen = () => {
-    const { userToken, userInfo,streamToken } = useContext(AuthContext);
+    const { userInfo, streamToken } = useContext(AuthContext);
     const user_id = userInfo.id;
     const user_name = userInfo.username;
-    const navigation = useNavigation()
+    const navigation = useNavigation();
 
     useEffect(() => {
         const connectUser = async () => {
-            await client.connectUser({
-                id: user_id,
-                name: user_name,
-                image: 'user_image',
-            }, streamToken);
-
-            const channel = client.channel('messaging', 'general',{
-
-            });
+            try {
+                await client.connectUser({
+                    id: user_id,
+                    name: user_name,
+                    image: 'user_image',
+                }, streamToken);
+            } catch (error) {
+                console.error("Error connecting user to Stream Chat:", error);
+                console.log("User ID:", user_id);
+                console.log(streamToken)
+            }
         };
 
         connectUser();
 
         return () => {
-            if (client) client.disconnectUser();
+            client.disconnectUser();
         };
-    }, [user_id, user_name, userToken]);
+    }, [user_id, user_name, streamToken]);
 
     return (
         <OverlayProvider>
