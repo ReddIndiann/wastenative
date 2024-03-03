@@ -3,7 +3,7 @@ import React, { useEffect, useState,useContext,useRef } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-
+import * as Location from 'expo-location'
 import axios from 'axios';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import {CheckCircleIcon} from 'react-native-heroicons/solid';
@@ -19,6 +19,21 @@ export default function HomeScreen() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+  const [location,setLocation]=useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      console.log(location);
+    })();
+  },[ ]);
 
   const mapRef = useRef(null);
   const closeModal = () => {
