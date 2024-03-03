@@ -121,7 +121,7 @@ export default function HomeScreen() {
           />
         )}
       </MapView>
-      
+{/*       
       <View style={styles.searchContainer}>
       <GooglePlacesAutocomplete
   placeholder='Search for location'
@@ -150,7 +150,10 @@ export default function HomeScreen() {
   }}
  
   
-/></View>
+/>
+
+
+</View> */}
 
        
         <View style={styles.requestContainer}>
@@ -243,20 +246,20 @@ const styles = StyleSheet.create({
   home: {
     flex: 1,
   },
-  searchContainer:{
-    position:'absolute',
-    width : "90%",
-    marginTop:50,
-    marginLeft:20,
-   backgroundColor:"white",
-   shadowColor:"black",
-   shadowOffset:{width:2,height:2},
-   shadowOpacity:0.5,
-   shadowRadius:4,
-   elevation:4,
-   padding:1,
+  // searchContainer:{
+  //   position:'absolute',
+  //   width : "90%",
+  //   marginTop:50,
+  //   marginLeft:20,
+  //  backgroundColor:"white",
+  //  shadowColor:"black",
+  //  shadowOffset:{width:2,height:2},
+  //  shadowOpacity:0.5,
+  //  shadowRadius:4,
+  //  elevation:4,
+  //  padding:1,
   
-  },
+  // },
   inputt:{
 borderColor:"#888",
 borderWidth:1,
@@ -343,7 +346,7 @@ margin:30
     width: "95%",
     height: "14%",
     padding:10,
-    top: "16%",
+    top: "7%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
