@@ -13,7 +13,7 @@ export default function ChatScreen() {
   const myId = userInfo.id;
   const receiverId = companies._id;
   useEffect(() => {
-    axios.get('http://191.168.11.42:5000/api/drivers/companies')
+    axios.get('http://172.20.10.9:5000/api/drivers/companies')
     .then(res=>{
       console.log(res.data)
       setCompanies(res.data)

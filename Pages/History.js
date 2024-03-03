@@ -10,14 +10,23 @@ export default function History() {
   const navigation = useNavigation();
   const username = userInfo ? userInfo.username : 'DefaultUser';
 
+  // const renderItem = ({ item }) => (
+  //   <View style={{ backgroundColor: 'white', display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+  //     <Text> {item.type}</Text>
+  //     <Text> {new Date(item.createdAt).toLocaleDateString()}</Text>
+  //     <Text> {item.status}</Text>
+  //   </View>
+  // );
+
   const renderItem = ({ item }) => (
-    <View style={{ backgroundColor: 'white', display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
-      <Text> {item.type}</Text>
-      <Text> {new Date(item.createdAt).toLocaleDateString()}</Text>
-      <Text> {item.status}</Text>
+    <View style={styles.listItem}>
+      <View style={styles.listItemContent}>
+        <Text style={styles.listItemText}>{item.type}</Text>
+        <Text style={styles.listItemText}>{new Date(item.createdAt).toLocaleDateString()}</Text>
+        <Text style={styles.listItemText}>{item.status}</Text>
+      </View>
     </View>
   );
-
   return (
     <SafeAreaView style={{flex:1,alignItems:"center",backgroundColor:"#F4F6F6"}}>
       <View style={styles.logoContainer}>
@@ -40,16 +49,8 @@ export default function History() {
         </View>
       </View>
 
-      <View style={{width:"95%",height:"60%",backgroundColor:"white",marginTop:"3%",display:"flex"}}>
-        <View style={{height:"10%",width:"90%",paddingLeft:"7%",display:"flex",flexDirection:"row",paddingRight:"5%",justifyContent:"space-between",alignItems:"center"}}>
-          <Text style={{fontSize:17,fontWeight:600}}>Haul History</Text>
-          <Text>All</Text>
-        </View>
-        <View style={{display:'flex',flexDirection:"row",justifyContent:"space-between",alignItems:'center',backgroundColor:"white",paddingLeft:"7%",paddingRight:"15%"}}>
-           <Text>Haul Type</Text>
-           <Text>Time</Text>
-           <Text>Status</Text>
-        </View>
+      <View style={styles.listContainer}>
+        <Text style={styles.listHeader}>Haul History</Text>
         <FlatList
           data={userRequests}
           renderItem={renderItem}
@@ -75,5 +76,36 @@ const styles = StyleSheet.create({
     height: "70%",
     resizeMode: "contain",
     marginLeft: "30%"
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#F4F6F6',
+  },
+  listContainer: {
+    width: '95%',
+    marginTop: '3%',
+    backgroundColor: 'white',
+    borderRadius: 5,
+    padding: 10,
+  },
+  listItem: {
+    backgroundColor: '#E8E8E8',
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 10,
+  },
+  listItemContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  listItemText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  listHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
 })

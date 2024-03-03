@@ -43,7 +43,7 @@ const Tabs = () => {
           </View>
           ),
         }}
-      />
+      />   
       <Tab.Screen
         name="Home"
         component={HomeScreen}
