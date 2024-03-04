@@ -34,6 +34,9 @@ const InfoScreen = ({ route, navigation }) => {
             <TouchableOpacity style={styles.completedBtn} onPress={()=>setCompleted()}>
                 <Text style={{color:"white",fontSize:15}}>Completed</Text>
             </TouchableOpacity>
+            <TouchableOpacity style={styles.completedBtn} onPress={()=>setCompleted()}>
+                <Text style={{color:"white",fontSize:15}}>Chat Client</Text>
+            </TouchableOpacity>
             {/*<Text>Username: {author}</Text>
             <Text>Type: {type}</Text>
             <Text>Updated At: {time}</Text>
