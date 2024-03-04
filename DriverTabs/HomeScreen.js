@@ -12,6 +12,7 @@ export default function HomeScreen() {
     const [destination, setDestination] = useState();
     const [currentLocation, setCurrentLocation] = useState(null);
     const {lat ,long ,userInfo} = useContext(AuthContext);
+    const [location, setLocation] = useState(null);
 
     const DriverName = userInfo.username;
     
@@ -42,26 +43,19 @@ export default function HomeScreen() {
 
     useEffect(() => {
         getRequests();
-        getCurrentLocation();
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+              console.log('Permission to access location was denied');
+              return;
+            }
+      
+            let location = await Location.getCurrentPositionAsync({});
+            setLocation(location);
+            console.log(location);
+        })();
     }, []);
-
-    const getCurrentLocation = async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-            console.error('Permission to access location was denied');
-            return;
-        }
-
-        let location = await Location.getCurrentPositionAsync({});
-        setCurrentLocation({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude
-        });
-        setRegion({
-            latitude: location.coords.latitude,
-            longitude:location.coords.longitude,
-        })
-    };
+  
 
     const getRequests = () => {
         axios.post('http://172.20.10.5:5000/api/drivers/assignHauls', {DriverName})
