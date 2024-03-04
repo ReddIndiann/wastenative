@@ -155,7 +155,7 @@ export default function HomeScreen() {
       author
     };
 
-    axios.post('http://172.20.10.9:5000/api/request', data)
+    axios.post('http://191.168.11.42:5000/api/request', data)
       .then(response => {
         if (response.status === 200) {
           setCoordinate(null);
