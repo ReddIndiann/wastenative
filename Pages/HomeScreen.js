@@ -8,6 +8,10 @@ import axios from 'axios';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import {CheckCircleIcon} from 'react-native-heroicons/solid';
 import RNPickerSelect from "react-native-picker-select";
+// import CustomModal from '../context/CustomModal';
+
+// Adjust the path as necessary
+
 import { AuthContext } from '../context/AuthContext';
 
 export default function HomeScreen() {
@@ -21,6 +25,78 @@ export default function HomeScreen() {
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [location,setLocation]=useState(null);
 
+  const [isCustomModalVisible, setIsCustomModalVisible] = useState(false);
+  const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
+
+  const CustomModal = ({ visible, onClose }) => (
+    <Modal
+      animationType="slide"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onClose}
+    >
+      <View style={{ 
+        flex: 1, 
+        justifyContent: 'space-between', // Aligns the modal view to the bottom
+        backgroundColor: 'rgba(0,0,0,0.5)', // Semi-transparent background
+        flexDirection:"column",
+      }}>
+        <View style={{ 
+          backgroundColor: 'white', 
+          padding: 20,
+          borderRadius: 10,
+          width: "100%", // Takes 100% width of the screen
+          height: "8%", // Takes 50% height from the bottom
+          marginTop:"10%"
+        }}>
+           <View style={styles.searchContainer}>
+      <GooglePlacesAutocomplete
+  placeholder='Search for location'
+  fetchDetails={true}
+  style={styles.inputt}
+  GooglePlacesSearchQuery={{
+    rankby: 'distance'
+  }}
+  onPress={(data, details = null) => {
+    // 'details' is provided when fetchDetails = true
+    console.log(data, details);
+    setIsCustomModalVisible(false);
+    setRegion({
+      ...region,
+      latitude: details.geometry.location.lat,
+      longitude: details.geometry.location.lng,
+    });
+  }}
+  query={{
+    key: 'AIzaSyB_oFQ3l8sdvksjPmf-q5lK75YPv0N2Kp4',
+    language: 'en',
+    types: 'geocode', // or 'establishment', 'regions', etc.
+  }}
+ 
+  
+/>
+
+
+</View>
+         
+        </View>
+        <View style={{ 
+          backgroundColor: 'white', 
+          padding: 20,
+          borderRadius: 10,
+          width: "100%", // Takes 100% width of the screen
+          height: "50%", // Takes 50% height from the bottom
+        }}>
+          <Text>Hello from Modal!</Text>
+          <TouchableOpacity onPress={onClose}>
+            <Text>Close Modal</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+  );
+
+  const closeCustomModal = () => setIsModalVisible(false);
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -34,7 +110,10 @@ export default function HomeScreen() {
       console.log(location);
     })();
   },[ ]);
-
+  const toggleCustomModal = () => {
+    setIsCustomModalVisible(!isCustomModalVisible);
+  };
+  
   const mapRef = useRef(null);
   const closeModal = () => {
     setIsModalVisible(false); // Hide modal
@@ -53,17 +132,19 @@ export default function HomeScreen() {
     setCoordinate(e.nativeEvent.coordinate); // Store the coordinate object directly
     console.log(e.nativeEvent.coordinate);
   }
-
   const setLoc = (e) => {
     if (!coordinate) {
       console.log('No location selected');
-      setIsModalVisible(false)
+      setIsModalVisible(false); // Hides any other modal
+      setIsCustomModalVisible(true); // Shows the CustomModal
+      setIsSecondModalVisible(true); // Shows the SecondCustomModal
       return;
     } else {
       console.log('Location selected');
-      setIsModalVisible(true)
+      setIsModalVisible(true); // Shows a different modal if a location is selected
     }
-  }
+  };
+  
 
   const sendLocationData = () => {
 
@@ -74,7 +155,7 @@ export default function HomeScreen() {
       author
     };
 
-    axios.post('http://172.20.10.5:5000/api/request', data)
+    axios.post('http://191.168.11.42:5000/api/request', data)
       .then(response => {
         if (response.status === 200) {
           setCoordinate(null);
@@ -172,13 +253,17 @@ export default function HomeScreen() {
 
        
         <View style={styles.requestContainer}>
+          
           <View style={styles.textContainer}>
             <Text style={styles.txt1}>Put in a Haul Request</Text>
             <Text style={styles.txt2}>Select a location on the map for waste pickup</Text>
           </View>
+         
+
           <TouchableOpacity onPress={setLoc} style={styles.requestBtn}>
             <Text style={{ color: "#fff" }}>Make Request</Text>
           </TouchableOpacity>
+          
         </View>
       
 
@@ -221,6 +306,9 @@ export default function HomeScreen() {
           <Text style={{ color: "#009065", fontSize: 13, fontWeight: 500,marginTop:"2%" }}>Click To Use</Text>
         </View>
       </Modal>
+     
+      <CustomModal visible={isCustomModalVisible} onClose={toggleCustomModal} />
+
 
       <Modal
     animationType="slide"
@@ -235,6 +323,7 @@ export default function HomeScreen() {
         <Text>Close</Text>
       </TouchableOpacity>
     </View>
+    
   </Modal>
 
   {/* Error Modal */}
@@ -261,20 +350,19 @@ const styles = StyleSheet.create({
   home: {
     flex: 1,
   },
-  // searchContainer:{
-  //   position:'absolute',
-  //   width : "90%",
-  //   marginTop:50,
-  //   marginLeft:20,
-  //  backgroundColor:"white",
-  //  shadowColor:"black",
-  //  shadowOffset:{width:2,height:2},
-  //  shadowOpacity:0.5,
-  //  shadowRadius:4,
-  //  elevation:4,
-  //  padding:1,
+  searchContainer:{
+    position:'absolute',
+    width : "90%",
+    marginTop:10,
+    marginLeft:20,
+   backgroundColor:"white",
+
   
-  // },
+ 
+   elevation:4,
+   padding:1,
+  
+  },
   inputt:{
 borderColor:"#888",
 borderWidth:1,
