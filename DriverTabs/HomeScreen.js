@@ -11,8 +11,10 @@ export default function HomeScreen() {
     const [requests,setRequest]= useState([]);
     const [destination, setDestination] = useState();
     const [currentLocation, setCurrentLocation] = useState(null);
-    const {areaAssigned} = useContext(AuthContext);
-    console.log(areaAssigned)
+    const {lat ,long ,userInfo} = useContext(AuthContext);
+
+    const DriverName = userInfo.username;
+    
     const [region, setRegion] = useState({
         latitude: 5.614818,
         longitude: -0.205874,
@@ -62,7 +64,7 @@ export default function HomeScreen() {
     };
 
     const getRequests = () => {
-        axios.get('http://192.168.43.190:5000/api/request/allrequests')
+        axios.post('http://172.20.10.5:5000/api/drivers/assignHauls', {DriverName})
             .then(response => {
                 setRequest(response.data);
                 console.log('Success:', response.data);
