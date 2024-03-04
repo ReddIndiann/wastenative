@@ -12,7 +12,7 @@ const InfoScreen = ({ route, navigation }) => {
         console.log(requestId);
         completeRequest(requestId,comAssociate);
         console.log("completed");
-     }
+    }
 
     return (
         <View style={styles.container}>

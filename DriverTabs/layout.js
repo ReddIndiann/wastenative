@@ -5,6 +5,7 @@ import { HomeIcon,ChatBubbleLeftIcon,ClockIcon } from 'react-native-heroicons/ou
 import HomeScreen from './HomeScreen';
 import HaulRequests from './HaulRequests';
 import DriverInfo from './DriverInfo';
+import ChatStackScreen from '../Chat/layout';
 
 
 const screenOptions = {
@@ -54,9 +55,11 @@ const DriverTabs = () => {
         }}
       />
       <Tab.Screen
-        name="Userinfo"
-        component={DriverInfo}
+        name="Chat"
+        component={ChatStackScreen} 
+        initialRouteName="Channel"
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <ChatBubbleLeftIcon color="white" size={size} />
           ),
