@@ -30,8 +30,7 @@ export const AuthProvider = ({ children }) => {
         .then(res=>{
             const { email, role, token, username,comAssociate ,phone,id,streamToken,lat,long} = res.data;
             console.log("API Response:", res.data);
-            console.log(areaAssigned);
-            const userInfo = { email, role, username,comAssociate,phone,id,areaAssigned };
+            const userInfo = { email, role, username,comAssociate,phone,id,lat,long};
             setUserInfo(userInfo);
             setUserToken(token);
             setStreamToken(streamToken);
