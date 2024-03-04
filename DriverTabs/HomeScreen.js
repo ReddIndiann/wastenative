@@ -53,6 +53,12 @@ export default function HomeScreen() {
             let location = await Location.getCurrentPositionAsync({});
             setLocation(location);
             console.log(location);
+            setRegion({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                latitudeDelta: "",
+                longitudeDelta: "",
+            });
         })();
     }, []);
   
