@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
             .catch(error => {
                 console.error("Error fetching user requests", error);
             });
+            
     }
 
     const login = (email,password) => {
