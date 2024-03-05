@@ -36,7 +36,7 @@ const DriverTabs = () => {
     >
       <Tab.Screen
         name="HaulRequests"
-        component={HaulRequests}
+        component={DriverInfo}
         options={{
           tabBarIcon: ({ color, size }) => (
             <ClockIcon color=

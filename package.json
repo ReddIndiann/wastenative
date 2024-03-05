@@ -38,7 +38,8 @@
     "react-native-reanimated": "~3.6.2",
     "react-native-svg": "14.1.0",
     "react-native-vector-icons": "^10.0.3",
-    "stream-chat-expo": "^5.24.0"
+    "stream-chat-expo": "^5.24.0",
+    "expo-sqlite": "~13.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
