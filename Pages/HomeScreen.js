@@ -10,6 +10,7 @@ import {CheckCircleIcon} from 'react-native-heroicons/solid';
 import RNPickerSelect from "react-native-picker-select";
 // import CustomModal from '../context/CustomModal';
 
+
 // Adjust the path as necessary
 
 import { AuthContext } from '../context/AuthContext';
@@ -46,8 +47,8 @@ export default function HomeScreen() {
           padding: 20,
           borderRadius: 10,
           width: "100%", // Takes 100% width of the screen
-          height: "8%", // Takes 50% height from the bottom
-          marginTop:"10%"
+          height: "10%", // Takes 50% height from the bottom
+       
         }}>
            <View style={styles.searchContainer}>
       <GooglePlacesAutocomplete
@@ -60,7 +61,10 @@ export default function HomeScreen() {
   onPress={(data, details = null) => {
     // 'details' is provided when fetchDetails = true
     console.log(data, details);
-    setIsCustomModalVisible(false);
+    setCoordinate({
+      latitude: details.geometry.location.lat,
+      longitude: details.geometry.location.lng
+    });
     setRegion({
       ...region,
       latitude: details.geometry.location.lat,
@@ -78,7 +82,9 @@ export default function HomeScreen() {
 
 
 </View>
-         
+          <TouchableOpacity onPress={onClose}>
+           
+          </TouchableOpacity>
         </View>
         <View style={{ 
           backgroundColor: 'white', 
@@ -95,7 +101,7 @@ export default function HomeScreen() {
       </View>
     </Modal>
   );
-
+  // Toggle both CustomModal and Se
   const closeCustomModal = () => setIsModalVisible(false);
   useEffect(() => {
     (async () => {
@@ -155,7 +161,7 @@ export default function HomeScreen() {
       author
     };
 
-    axios.post('http://191.168.11.42:5000/api/request', data)
+    axios.post('http://172.20.10.9:5000/api/request', data)
       .then(response => {
         if (response.status === 200) {
           setCoordinate(null);
@@ -353,12 +359,11 @@ const styles = StyleSheet.create({
   searchContainer:{
     position:'absolute',
     width : "90%",
-    marginTop:10,
+    marginTop:30,
     marginLeft:20,
    backgroundColor:"white",
 
-  
- 
+   
    elevation:4,
    padding:1,
   

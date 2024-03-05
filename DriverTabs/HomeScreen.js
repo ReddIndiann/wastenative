@@ -6,6 +6,7 @@ import { XMarkIcon } from 'react-native-heroicons/outline';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
+import MapViewDirections from 'react-native-maps-directions';
 
 export default function HomeScreen() {
     const [requests,setRequest]= useState([]);
@@ -28,12 +29,13 @@ export default function HomeScreen() {
     const navigation = useNavigation();
     
     const handleMarkerPress = (request) => {
-        navigation.navigate('InfoScreen', {
-            author: request.author,
-            time: request.updatedAt,
-            type: request.type,
-            requestId: request._id
-        });
+        setDestination({ latitude: parseFloat(request.lat), longitude: parseFloat(request.long) });
+        // navigation.navigate('InfoScreen', {
+        //     author: request.author,
+        //     time: request.updatedAt,
+        //     type: request.type,
+        //     requestId: request._id
+        // });
         console.log(request);
     };
 
@@ -51,14 +53,13 @@ export default function HomeScreen() {
             }
       
             let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-            console.log(location);
+            setCurrentLocation(location.coords);
         })();
     }, []);
   
 
     const getRequests = () => {
-        axios.post('http://172.20.10.5:5000/api/drivers/assignHauls', {DriverName})
+        axios.post('http://172.20.10.9:5000/api/drivers/assignHauls', {DriverName})
             .then(response => {
                 setRequest(response.data);
                 console.log('Success:', response.data);
@@ -80,21 +81,20 @@ export default function HomeScreen() {
                 {requests.map(request => (
                     <Marker
                         key={request._id}
-                        coordinate={{
-                            latitude: parseFloat(request.lat),
-                            longitude: parseFloat(request.long)
-                        }}
+                        coordinate={{ latitude: parseFloat(request.lat), longitude: parseFloat(request.long) }}
                         onPress={() => handleMarkerPress(request)}
                     />
                 ))}
 
-               {/* <Circle
-                    center={areaAssigned.center}
-                    radius={areaAssigned.radius}
-                    strokeWidth={2}
-                    strokeColor="rgba(0,0,255,0.5)"
-                    fillColor="rgba(0,0,255,0.3)"
-                />*/}
+{currentLocation && destination && (
+                    <MapViewDirections
+                        origin={currentLocation}
+                        destination={destination}
+                        apikey={'AIzaSyB_oFQ3l8sdvksjPmf-q5lK75YPv0N2Kp4'} // Replace with your Google Maps API Key
+                        strokeWidth={4}
+                        strokeColor="blue"
+                    />
+                )}
             </MapView>
         </View>
   )
