@@ -54,8 +54,9 @@ const DriverTabs = () => {
       />
       <Tab.Screen
         name="Userinfo"
-        component={ChatStackScreen}
+        component={DriverInfo}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <ChatBubbleLeftIcon color="white" size={size} />
           ),

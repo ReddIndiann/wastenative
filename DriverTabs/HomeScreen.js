@@ -59,7 +59,8 @@ export default function HomeScreen() {
             }
       
             let location = await Location.getCurrentPositionAsync({});
-            setCurrentLocation(location.coords);
+            setLocation(location);
+            console.log(location);
         })();
     }, []);
   

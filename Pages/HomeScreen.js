@@ -1,15 +1,14 @@
 import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, TouchableOpacity, Modal, Dimensions } from 'react-native'
-import React, { useEffect, useState,useContext,useRef } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location'
 import axios from 'axios';
 import { XMarkIcon } from 'react-native-heroicons/outline';
-import {CheckCircleIcon} from 'react-native-heroicons/solid';
+import { CheckCircleIcon } from 'react-native-heroicons/solid';
 import RNPickerSelect from "react-native-picker-select";
 // import CustomModal from '../context/CustomModal';
-
 
 // Adjust the path as necessary
 
@@ -18,13 +17,14 @@ import { AuthContext } from '../context/AuthContext';
 export default function HomeScreen() {
   const { userInfo } = useContext(AuthContext);
   const username = userInfo ? userInfo.username : 'DefaultUser';
-  const author =  userInfo?.email;
+  const author = userInfo?.email;
   const [coordinate, setCoordinate] = useState(null);
   const [type, setType] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
-  const [location,setLocation]=useState(null);
+  const [location, setLocation] = useState(null);
+  const [cityInfo,setCityInfo] = useState(null);
 
   const [isCustomModalVisible, setIsCustomModalVisible] = useState(false);
   const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
@@ -36,19 +36,19 @@ export default function HomeScreen() {
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={{ 
-        flex: 1, 
+      <View style={{
+        flex: 1,
         justifyContent: 'space-between', // Aligns the modal view to the bottom
         backgroundColor: 'rgba(0,0,0,0.5)', // Semi-transparent background
-        flexDirection:"column",
+        flexDirection: "column",
       }}>
-        <View style={{ 
-          backgroundColor: 'white', 
+        <View style={{
+          backgroundColor: 'white',
           padding: 20,
           borderRadius: 10,
           width: "100%", // Takes 100% width of the screen
-          height: "10%", // Takes 50% height from the bottom
-       
+          height: "8%", // Takes 50% height from the bottom
+          marginTop:"10%"
         }}>
            <View style={styles.searchContainer}>
       <GooglePlacesAutocomplete
@@ -61,10 +61,7 @@ export default function HomeScreen() {
   onPress={(data, details = null) => {
     // 'details' is provided when fetchDetails = true
     console.log(data, details);
-    setCoordinate({
-      latitude: details.geometry.location.lat,
-      longitude: details.geometry.location.lng
-    });
+    setIsCustomModalVisible(false);
     setRegion({
       ...region,
       latitude: details.geometry.location.lat,
@@ -82,12 +79,10 @@ export default function HomeScreen() {
 
 
 </View>
-          <TouchableOpacity onPress={onClose}>
-           
-          </TouchableOpacity>
+         
         </View>
-        <View style={{ 
-          backgroundColor: 'white', 
+        <View style={{
+          backgroundColor: 'white',
           padding: 20,
           borderRadius: 10,
           width: "100%", // Takes 100% width of the screen
@@ -107,19 +102,28 @@ export default function HomeScreen() {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        console.log('Permission to access location was denied');
+        console.error('Permission to access location was denied');
         return;
       }
-
+  
       let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      console.log(location);
+      setCityInfo (location);
     })();
-  },[ ]);
+  }, []);
+  
+  useEffect(() => {
+    if (location) {
+      (async () => {
+        let geocode = await Location.reverseGeocodeAsync(location.coords);
+        console.log(geocode);
+      })();
+    }
+  }, [location]);
+  
   const toggleCustomModal = () => {
     setIsCustomModalVisible(!isCustomModalVisible);
   };
-  
+
   const mapRef = useRef(null);
   const closeModal = () => {
     setIsModalVisible(false); // Hide modal
@@ -150,7 +154,7 @@ export default function HomeScreen() {
       setIsModalVisible(true); // Shows a different modal if a location is selected
     }
   };
-  
+
 
   const sendLocationData = () => {
 
@@ -169,17 +173,17 @@ export default function HomeScreen() {
           setIsSuccessModalVisible(true);
           setTimeout(() => {
             setIsSuccessModalVisible(false);
-        }, 2000);
+          }, 2000);
 
-        }else{
+        } else {
           console.error('Error:', error);
-      setIsErrorModalVisible(true);
+          setIsErrorModalVisible(true);
         }
       })
       .catch(error => {
         console.error('Error:', error);
       });
-    
+
   };
 
   const onPlaceSelected = (data, details = null) => {
@@ -206,16 +210,16 @@ export default function HomeScreen() {
   };
   return (
     <View style={styles.home}>
-       <MapView 
+      <MapView
         ref={mapRef}
-        onPress={handleMapPress} 
+        onPress={handleMapPress}
         provider={PROVIDER_GOOGLE}
         showsUserLocation={true}
         followsUserLocation={true}
-        
+
         region={region}  // Use 'region' instead of 'initialRegion' to allow dynamic changes
         style={styles.map}>
-     {coordinate && (
+        {coordinate && (
           <Marker
             coordinate={coordinate}
             title={"Selected Location"}
@@ -223,7 +227,7 @@ export default function HomeScreen() {
           />
         )}
       </MapView>
-{/*       
+      {/*       
       <View style={styles.searchContainer}>
       <GooglePlacesAutocomplete
   placeholder='Search for location'
@@ -257,21 +261,21 @@ export default function HomeScreen() {
 
 </View> */}
 
-       
-        <View style={styles.requestContainer}>
-          
-          <View style={styles.textContainer}>
-            <Text style={styles.txt1}>Put in a Haul Request</Text>
-            <Text style={styles.txt2}>Select a location on the map for waste pickup</Text>
-          </View>
-         
 
-          <TouchableOpacity onPress={setLoc} style={styles.requestBtn}>
-            <Text style={{ color: "#fff" }}>Make Request</Text>
-          </TouchableOpacity>
-          
+      <View style={styles.requestContainer}>
+
+        <View style={styles.textContainer}>
+          <Text style={styles.txt1}>Put in a Haul Request</Text>
+          <Text style={styles.txt2}>Select a location on the map for waste pickup</Text>
         </View>
-      
+
+
+        <TouchableOpacity onPress={setLoc} style={styles.requestBtn}>
+          <Text style={{ color: "#fff" }}>Make Request</Text>
+        </TouchableOpacity>
+
+      </View>
+
 
       <Modal
         animationType="slide"
@@ -309,43 +313,43 @@ export default function HomeScreen() {
             <Text style={{ color: "#fff", fontSize: 18, textAlign: "center" }}>Submit Response</Text>
           </TouchableOpacity>
           <Text style={{ color: "#C0C0C0", fontSize: 13, textAlign: "center", marginTop: "5%" }}>Try EcoHaul's AI Waste Segregation tool</Text>
-          <Text style={{ color: "#009065", fontSize: 13, fontWeight: 500,marginTop:"2%" }}>Click To Use</Text>
+          <Text style={{ color: "#009065", fontSize: 13, fontWeight: 500, marginTop: "2%" }}>Click To Use</Text>
         </View>
       </Modal>
-     
+
       <CustomModal visible={isCustomModalVisible} onClose={toggleCustomModal} />
 
 
       <Modal
-    animationType="slide"
-    transparent={true}
-    visible={isSuccessModalVisible}
-    onRequestClose={closeSuccessModal}>
-    <View style={styles.SuccessmodalView}>
-      {/* Modal content */}
-      <CheckCircleIcon size={60} color="#4ECCA3"/>
-      <Text style={{fontSize:20,width:"80%",textAlign:"center"}}>Response{"\n"}Submitted</Text>
-      <TouchableOpacity onPress={closeSuccessModal}>
-        <Text>Close</Text>
-      </TouchableOpacity>
-    </View>
-    
-  </Modal>
+        animationType="slide"
+        transparent={true}
+        visible={isSuccessModalVisible}
+        onRequestClose={closeSuccessModal}>
+        <View style={styles.SuccessmodalView}>
+          {/* Modal content */}
+          <CheckCircleIcon size={60} color="#4ECCA3" />
+          <Text style={{ fontSize: 20, width: "80%", textAlign: "center" }}>Response{"\n"}Submitted</Text>
+          <TouchableOpacity onPress={closeSuccessModal}>
+            <Text>Close</Text>
+          </TouchableOpacity>
+        </View>
 
-  {/* Error Modal */}
-  <Modal
-    animationType="slide"
-    transparent={true}
-    visible={isErrorModalVisible}
-    onRequestClose={closeErrorModal}>
-    <View style={styles.SuccessmodalView}>
-      {/* Modal content */}
-      <Text>Error: Try Again</Text>
-      <TouchableOpacity onPress={closeErrorModal}>
-        <Text>Close</Text>
-      </TouchableOpacity>
-    </View>
-  </Modal>
+      </Modal>
+
+      {/* Error Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isErrorModalVisible}
+        onRequestClose={closeErrorModal}>
+        <View style={styles.SuccessmodalView}>
+          {/* Modal content */}
+          <Text>Error: Try Again</Text>
+          <TouchableOpacity onPress={closeErrorModal}>
+            <Text>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
 
 
     </View>
@@ -359,21 +363,22 @@ const styles = StyleSheet.create({
   searchContainer:{
     position:'absolute',
     width : "90%",
-    marginTop:30,
+    marginTop:10,
     marginLeft:20,
    backgroundColor:"white",
 
-   
+  
+ 
    elevation:4,
    padding:1,
   
   },
-  inputt:{
-borderColor:"#888",
-borderWidth:1,
-margin:30
+  inputt: {
+    borderColor: "#888",
+    borderWidth: 1,
+    margin: 30
   }
-,
+  ,
   SuccessmodalView: {
     width: "50%",
     height: "30%",
@@ -393,14 +398,14 @@ margin:30
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    borderRadius:8,
+    borderRadius: 8,
   },
   sendBtn: {
     width: "83%",
     height: "17%",
     backgroundColor: "#009065",
     marginTop: "5%",
-    borderRadius:5,
+    borderRadius: 5,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -425,7 +430,7 @@ margin:30
   map: {
     flex: 1
   },
-  
+
   logoContainer: {
     width: "100%",
     height: "10%",
@@ -453,16 +458,16 @@ margin:30
   requestContainer: {
     width: "95%",
     height: "14%",
-    padding:10,
+    padding: 10,
     top: "7%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
-    alignSelf:"center",
+    alignSelf: "center",
     position: "absolute",
-    backgroundColor:"#fff",
-    borderRadius:5
+    backgroundColor: "#fff",
+    borderRadius: 5
   },
   textContainer: {
     width: "60%",
