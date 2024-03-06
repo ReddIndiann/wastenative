@@ -4,6 +4,7 @@ import MapView, { PROVIDER_GOOGLE,Marker} from 'react-native-maps';
 import { AuthContext } from '../context/AuthContext';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import axios from 'axios';
+
 import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions';
@@ -14,7 +15,8 @@ export default function HomeScreen() {
     const [currentLocation, setCurrentLocation] = useState(null);
     const {lat ,long ,userInfo} = useContext(AuthContext);
     const [location, setLocation] = useState(null);
-
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedRequest, setSelectedRequest] = useState(null);
     const DriverName = userInfo.username;
     
     const [region, setRegion] = useState({
@@ -28,20 +30,24 @@ export default function HomeScreen() {
 
     const navigation = useNavigation();
     
+    // const handleMarkerPress = (request) => {
+    //     setDestination({ latitude: parseFloat(request.lat), longitude: parseFloat(request.long) });
+    //     // navigation.navigate('InfoScreen', {
+    //     //     author: request.author,
+    //     //     time: request.updatedAt,
+    //     //     type: request.type,
+    //     //     requestId: request._id
+    //     // });
+    //     console.log(request);
+    // };
     const handleMarkerPress = (request) => {
-        setDestination({ latitude: parseFloat(request.lat), longitude: parseFloat(request.long) });
-        // navigation.navigate('InfoScreen', {
-        //     author: request.author,
-        //     time: request.updatedAt,
-        //     type: request.type,
-        //     requestId: request._id
-        // });
-        console.log(request);
+        setSelectedRequest(request);
+        setIsModalVisible(true);
     };
 
-    const closeModal = () =>{
-        setModalVisible(false);
-    }
+    const closeModal = () => {
+        setIsModalVisible(false);
+    };
 
     useEffect(() => {
         getRequests();
@@ -57,9 +63,18 @@ export default function HomeScreen() {
         })();
     }, []);
   
+    const showDirections = () => {
+        if (selectedRequest && currentLocation) {
+            setDestination({
+                latitude: parseFloat(selectedRequest.lat),
+                longitude: parseFloat(selectedRequest.long)
+            });
+            setIsModalVisible(false); // Close the modal when showing directions
+        }
+    };
 
     const getRequests = () => {
-        axios.post('http://172.20.10.9:5000/api/drivers/assignHauls', {DriverName})
+        axios.post('http://191.168.7.48:5000/api/drivers/assignHauls', {DriverName})
             .then(response => {
                 setRequest(response.data);
                 console.log('Success:', response.data);
@@ -96,6 +111,30 @@ export default function HomeScreen() {
                     />
                 )}
             </MapView>
+            <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={closeModal}>
+        <View style={styles.modalView}>
+          <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+            <XMarkIcon color="white" size={20} style={styles.closeButtonText} />
+          </TouchableOpacity>
+          <Text style={{ color: "#009065", fontSize: 20, fontWeight: 400 }}>Select Waste Type</Text>
+          <Text style={{ color: "#C0C0C0", fontSize: 13, textAlign: "center", marginTop: "3%" }}>Provide the category of waste by selecting{"\n"}from the dropdown</Text>
+          <View style={styles.inputGroup}>
+            <Text style={{ color: "#009065", fontSize: 15, fontWeight: 400 }}>Waste Type*</Text>
+            <TouchableOpacity onPress={showDirections}>
+        <Text style={{ color: "#009065", fontSize: 15, fontWeight: 400 }}>Show Distance </Text>
+      </TouchableOpacity>
+          </View>
+          <TouchableOpacity style={styles.sendBtn}>
+            <Text style={{ color: "#fff", fontSize: 18, textAlign: "center" }}>Submit Response</Text>
+          </TouchableOpacity>
+          <Text style={{ color: "#C0C0C0", fontSize: 13, textAlign: "center", marginTop: "5%" }}>Try EcoHaul's AI Waste Segregation tool</Text>
+          <Text style={{ color: "#009065", fontSize: 13, fontWeight: 500,marginTop:"2%" }}>Click To Use</Text>
+        </View>
+      </Modal>
         </View>
   )
 }
@@ -136,5 +175,41 @@ const styles = StyleSheet.create({
     modalText: {
         marginBottom: 15,
         textAlign: "center"
+    },
+    modalView: {
+      margin: 20,
+      width: "90%",
+      height: "40%",
+      display: "flex",
+      alignSelf: "center",
+      marginTop: "55%",
+      backgroundColor: "white",
+      borderRadius: 20,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+    },
+    closeButton: {
+      backgroundColor: "#fff",
+      borderRadius: 20,
+      elevation: 2,
+      alignSelf: "flex-end",
+      marginTop: "4%",
+      marginRight: "4%",
+    },
+    closeButtonText: {
+      color: "black",
+      fontWeight: "bold",
+      textAlign: "center"
     }
 })

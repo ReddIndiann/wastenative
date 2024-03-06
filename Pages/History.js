@@ -3,21 +3,35 @@ import {useContext}from 'react'
 import { AuthContext } from '../context/AuthContext';
 import { Avatar } from "@react-native-material/core";
 import {useNavigation} from '@react-navigation/native';
-
+import axios from 'axios';
+import { useEffect,useState } from 'react';
 export default function History() {
-  const {userRequests} = useContext(AuthContext);
+
   const { userInfo } = useContext(AuthContext);
   const navigation = useNavigation();
   const username = userInfo ? userInfo.username : 'DefaultUser';
+const email =userInfo.email
+const [userRequests,setUserRequests]= useState([])
+useEffect(()=>{
+  fetchUserRequests(email)
 
-  // const renderItem = ({ item }) => (
-  //   <View style={{ backgroundColor: 'white', display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
-  //     <Text> {item.type}</Text>
-  //     <Text> {new Date(item.createdAt).toLocaleDateString()}</Text>
-  //     <Text> {item.status}</Text>
-  //   </View>
-  // );
+},[email])
 
+
+
+
+const fetchUserRequests = (email) => {
+  axios.get(`http://191.168.7.48:5000/api/request/userhistory?author=${email}`)
+      .then(res => {
+          // Handle the response containing the requests
+          console.log("User requests:", res.data);
+          setUserRequests(res.data);
+      })
+      .catch(error => {
+          console.error("Error fetching user requests", error);
+      });
+      
+}
   const renderItem = ({ item }) => (
     <View style={styles.listItem}>
       <View style={styles.listItemContent}>

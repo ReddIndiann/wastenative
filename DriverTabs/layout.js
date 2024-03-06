@@ -5,6 +5,7 @@ import { HomeIcon,ChatBubbleLeftIcon,ClockIcon } from 'react-native-heroicons/ou
 import HomeScreen from './HomeScreen';
 import HaulRequests from './HaulRequests';
 import DriverInfo from './DriverInfo';
+import ChatStackScreen from '../Chat/layout';
 
 
 const screenOptions = {
@@ -12,15 +13,13 @@ const screenOptions = {
   headerShown: false,
   tabBarStyle: {
     height: '10%',
-    position: 'absolute',
-    elevation: 0.1,
+   
     backgroundColor: '#179A72',
-    width: '95%',
-    bottom: '0.5%',
-    left: '2%',
-    borderRadius: '16',
+    width: '100%',
+   
+    bordertopRadius: '16',
     shadowColor: '#000',
-    bottom:"1%"
+    
   },
 };
 
@@ -35,7 +34,7 @@ const DriverTabs = () => {
     >
       <Tab.Screen
         name="HaulRequests"
-        component={HaulRequests}
+        component={DriverInfo}
         options={{
           tabBarIcon: ({ color, size }) => (
             <ClockIcon color=
@@ -55,7 +54,7 @@ const DriverTabs = () => {
       />
       <Tab.Screen
         name="Userinfo"
-        component={DriverInfo}
+        component={ChatStackScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <ChatBubbleLeftIcon color="white" size={size} />
