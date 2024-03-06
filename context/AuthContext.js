@@ -26,10 +26,7 @@ export const AuthProvider = ({ children }) => {
             AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));     
             AsyncStorage.setItem("userToken",token);   
             const userEmail = email;  // Adjust this if the structure is different
-            if (userEmail) {
-                console.log("user email is parsed")
-                fetchUserRequests(userEmail);
-            }
+            
         })
         .catch(error => {
             console.error("Login error", error);

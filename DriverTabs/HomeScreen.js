@@ -59,8 +59,7 @@ export default function HomeScreen() {
             }
       
             let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-            console.log(location);
+            setCurrentLocation(location.coords);
         })();
     }, []);
   
@@ -85,6 +84,15 @@ export default function HomeScreen() {
         });
     }
 
+    const showDetails = () => {
+        setIsModalVisible(false); // Close the modal
+        navigation.navigate('InfoScreen', {
+          author: selectedRequest.author,
+          time: selectedRequest.updatedAt,
+          type: selectedRequest.type,
+          requestId: selectedRequest._id
+        });
+      };
   return (
     <View style={{ flex: 1 }}>
             <MapView 
@@ -121,19 +129,19 @@ export default function HomeScreen() {
           <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
             <XMarkIcon color="white" size={20} style={styles.closeButtonText} />
           </TouchableOpacity>
-          <Text style={{ color: "#009065", fontSize: 20, fontWeight: 400 }}>Select Waste Type</Text>
-          <Text style={{ color: "#C0C0C0", fontSize: 13, textAlign: "center", marginTop: "3%" }}>Provide the category of waste by selecting{"\n"}from the dropdown</Text>
+          
           <View style={styles.inputGroup}>
-            <Text style={{ color: "#009065", fontSize: 15, fontWeight: 400 }}>Waste Type*</Text>
+
             <TouchableOpacity onPress={showDirections}>
+        <Text style={{ color: "#009065", fontSize: 15, fontWeight: 400 }}>Show Drections  </Text>
+      </TouchableOpacity>
+
+      
+          </View>
+          <TouchableOpacity onPress={showDetails}>
         <Text style={{ color: "#009065", fontSize: 15, fontWeight: 400 }}>Show Distance </Text>
       </TouchableOpacity>
-          </View>
-          <TouchableOpacity style={styles.sendBtn}>
-            <Text style={{ color: "#fff", fontSize: 18, textAlign: "center" }}>Submit Response</Text>
-          </TouchableOpacity>
-          <Text style={{ color: "#C0C0C0", fontSize: 13, textAlign: "center", marginTop: "5%" }}>Try EcoHaul's AI Waste Segregation tool</Text>
-          <Text style={{ color: "#009065", fontSize: 13, fontWeight: 500,marginTop:"2%" }}>Click To Use</Text>
+
         </View>
       </Modal>
         </View>
