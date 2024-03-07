@@ -25,11 +25,12 @@ export default function HomeScreen() {
   const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
   const [location, setLocation] = useState(null);
   const [cityInfo,setCityInfo] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState(null); // New state for live location
 
-  const [isCustomModalVisible, setIsCustomModalVisible] = useState(false);
+  const [isCustomModalVisible, setIsCustomModalVisible] = useState(true);
   const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
 
-  const CustomModal = ({ visible, onClose }) => (
+  const CustomModal = ({ visible, onClose,frequentLocations }) => (
     <Modal
       animationType="slide"
       transparent={true}
@@ -82,17 +83,35 @@ export default function HomeScreen() {
          
         </View>
         <View style={{
-          backgroundColor: 'white',
-          padding: 20,
-          borderRadius: 10,
-          width: "100%", // Takes 100% width of the screen
-          height: "50%", // Takes 50% height from the bottom
-        }}>
-          <Text>Hello from Modal!</Text>
-          <TouchableOpacity onPress={onClose}>
-            <Text>Close Modal</Text>
-          </TouchableOpacity>
-        </View>
+                backgroundColor: 'white',
+                padding: 20,
+                borderRadius: 10,
+                width: "100%",
+                height: "50%",
+            }}>
+                <Text style={{ fontSize: 20, marginBottom: 20 }}>Choose Location</Text>
+                <TouchableOpacity 
+                    style={styles.locationOption}
+                    onPress={handleUseCurrentLocation}>
+                    <Text style={styles.locationOptionText}>Use Current Location</Text>
+                </TouchableOpacity>
+                {/* {frequentLocations.map((location, index) => (
+                    <TouchableOpacity 
+                        key={index}
+                        style={styles.locationOption}
+                        onPress={() => {
+                            // Handle frequent location selection here
+                            // e.g., setRegion(location.coords);
+                        }}>
+                        <Text style={styles.locationOptionText}>{location.name}</Text>
+                    </TouchableOpacity>
+                ))} */}
+                <TouchableOpacity 
+                    style={styles.closeButton}
+                    onPress={onClose}>
+                    <Text style={styles.closeButtonText}>Close</Text>
+                </TouchableOpacity>
+            </View>
       </View>
     </Modal>
   );
@@ -105,9 +124,11 @@ export default function HomeScreen() {
         console.error('Permission to access location was denied');
         return;
       }
-  
       let location = await Location.getCurrentPositionAsync({});
-      setCityInfo (location);
+      setCurrentLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
     })();
   }, []);
   
@@ -138,6 +159,27 @@ export default function HomeScreen() {
     longitudeDelta: 0.0421,
   });
 
+  const handleUseCurrentLocation = () => {
+    if (currentLocation) {
+      setCoordinate(currentLocation);
+      setIsCustomModalVisible(false); // Close CustomModal
+      // Update the region and animate the map to the new region
+      const newRegion = {
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude,
+        latitudeDelta: 0.0922, // Adjust as necessary
+        longitudeDelta: 0.04201, // Adjust as necessary
+      };
+      setRegion(newRegion);
+      if (mapRef.current) {
+        mapRef.current.animateToRegion(newRegion, 1000); // Animate with a duration of 1000ms
+      }
+    } else {
+      console.error('Current location is not available');
+      // Handle the error appropriately
+    }
+  };
+  
   const handleMapPress = (e) => {
     setCoordinate(e.nativeEvent.coordinate); // Store the coordinate object directly
     console.log(e.nativeEvent.coordinate);
@@ -147,7 +189,7 @@ export default function HomeScreen() {
       console.log('No location selected');
       setIsModalVisible(false); // Hides any other modal
       setIsCustomModalVisible(true); // Shows the CustomModal
-      setIsSecondModalVisible(true); // Shows the SecondCustomModal
+      // Shows the SecondCustomModal
       return;
     } else {
       console.log('Location selected');
@@ -157,33 +199,37 @@ export default function HomeScreen() {
 
 
   const sendLocationData = () => {
-
+    if (!coordinate) {
+      console.error('No location selected');
+      return;
+    }
+  
     const data = {
       type,
       lat: coordinate.latitude,
       long: coordinate.longitude,
       author
     };
-
-    axios.post('http://191.168.7.48:5000/api/request', data)
+  
+    axios.post('http://190.168.0.134:5000/api/request', data)
       .then(response => {
         if (response.status === 200) {
           setCoordinate(null);
-          setIsModalVisible(false);
-          setIsSuccessModalVisible(true);
+          setType(''); // Reset the type
+          setIsModalVisible(false); // Close the waste type modal
+          setIsSuccessModalVisible(true); // Show success modal
           setTimeout(() => {
             setIsSuccessModalVisible(false);
           }, 2000);
-
         } else {
-          console.error('Error:', error);
+          console.error('Error:', response);
           setIsErrorModalVisible(true);
         }
       })
       .catch(error => {
         console.error('Error:', error);
+        setIsErrorModalVisible(true);
       });
-
   };
 
   const onPlaceSelected = (data, details = null) => {
@@ -283,8 +329,8 @@ export default function HomeScreen() {
         visible={isModalVisible}
         onRequestClose={closeModal}>
         <View style={styles.modalView}>
-          <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-            <XMarkIcon color="white" size={20} style={styles.closeButtonText} />
+          <TouchableOpacity style={styles.closeButtonn} onPress={closeModal}>
+            <XMarkIcon color="#009065" size={20} style={styles.closeButtonText} />
           </TouchableOpacity>
           <Text style={{ color: "#009065", fontSize: 20, fontWeight: 400 }}>Select Waste Type</Text>
           <Text style={{ color: "#C0C0C0", fontSize: 13, textAlign: "center", marginTop: "3%" }}>Provide the category of waste by selecting{"\n"}from the dropdown</Text>
@@ -521,19 +567,35 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center"
   },
-  closeButton: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    elevation: 2,
-    alignSelf: "flex-end",
-    marginTop: "4%",
-    marginRight: "4%",
-  },
-  closeButtonText: {
-    color: "black",
-    fontWeight: "bold",
-    textAlign: "center"
-  }
+  locationOption: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#e0e0e0',
+    alignItems: 'center',
+},
+locationOptionText: {
+    fontSize: 18,
+},
+closeButton: {
+    backgroundColor: "#009065",
+    padding: 10,
+    marginTop: 20,
+    borderRadius: 5,
+    alignItems: 'center',
+},
+closeButtonn: {
+ 
+  padding: 10,
+  marginTop: 20,
+  marginLeft: 20,
+  borderRadius: 5,
+
+},
+closeButtonText: {
+    color: "#fff",
+    fontSize: 16,
+}
+ 
 })
 
 const pickerSelectStyles = StyleSheet.create({

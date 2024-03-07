@@ -2,7 +2,7 @@ import React from 'react';
 import { Channel, MessageList, MessageInput } from 'stream-chat-expo';
 import { useRoute } from '@react-navigation/native';
 
-// ... [rest of your imports]
+
 
 export default function ChatRoom() {
   const route = useRoute();

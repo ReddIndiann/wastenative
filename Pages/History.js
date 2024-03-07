@@ -21,7 +21,7 @@ useEffect(()=>{
 
 
 const fetchUserRequests = (email) => {
-  axios.get(`http://191.168.7.48:5000/api/request/userhistory?author=${email}`)
+  axios.get(`http://190.168.0.134:5000/api/request/userhistory?author=${email}`)
       .then(res => {
           // Handle the response containing the requests
           console.log("User requests:", res.data);

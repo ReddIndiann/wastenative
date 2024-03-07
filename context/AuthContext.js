@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     const login = (email,password) => {
         console.log("Logging in");
         setLoading(true);
-        axios.post("http://191.168.7.48:5000/api/auth/login",{email,password})
+        axios.post("http://190.168.0.134:5000/api/auth/login",{email,password})
         .then(res=>{
             const { email, role, token, username,comAssociate ,phone,id,streamToken,lat,long} = res.data;
             console.log("API Response:", res.data);

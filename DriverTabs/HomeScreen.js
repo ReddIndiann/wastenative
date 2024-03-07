@@ -121,29 +121,28 @@ export default function HomeScreen() {
                 )}
             </MapView>
             <Modal
-        animationType="slide"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={closeModal}>
-        <View style={styles.modalView}>
-          <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-            <XMarkIcon color="white" size={20} style={styles.closeButtonText} />
-          </TouchableOpacity>
-          
-          <View style={styles.inputGroup}>
+  animationType="slide"
+  transparent={true}
+  visible={isModalVisible}
+  onRequestClose={closeModal}>
+  <View style={styles.modalView}>
+    <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
+      <XMarkIcon color="black" size={20} />
+    </TouchableOpacity>
+    
+    {/* Rest of your modal content goes here */}
+    
+    <TouchableOpacity style={styles.button} onPress={showDirections}>
+      <Text style={styles.buttonText}>Show Directions</Text>
+    </TouchableOpacity>
 
-            <TouchableOpacity onPress={showDirections}>
-        <Text style={{ color: "#009065", fontSize: 15, fontWeight: 400 }}>Show Drections  </Text>
-      </TouchableOpacity>
+    <TouchableOpacity style={styles.button} onPress={showDetails}>
+      <Text style={styles.buttonText}>Show Details</Text>
+    </TouchableOpacity>
 
-      
-          </View>
-          <TouchableOpacity onPress={showDetails}>
-        <Text style={{ color: "#009065", fontSize: 15, fontWeight: 400 }}>Show Distance </Text>
-      </TouchableOpacity>
+  </View>
+</Modal>
 
-        </View>
-      </Modal>
         </View>
   )
 }
@@ -153,47 +152,12 @@ const styles = StyleSheet.create({
         flex:1
     },
     modalView: {
-        backgroundColor: "dodgerblue",
-        width:"70%",
-        height:"30%",
-        borderRadius: 20,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-        marginTop:"60%",
-        marginLeft:'15%'
-    },
-    buttonClose: {
-        backgroundColor: "red",
-        width:"15%",
-        height:"15%",
-        marginTop:"2%",
-        marginLeft:"80%",
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center"
-    },
-    modalView: {
-      margin: 20,
+      backgroundColor: "#fff",
       width: "90%",
-      height: "40%",
-      display: "flex",
-      alignSelf: "center",
-      marginTop: "55%",
-      backgroundColor: "white",
-      borderRadius: 20,
+      height: "50%", // Increased height for more content
+      borderRadius: 25,
+      padding: 20,
+      justifyContent: "space-around", // Evenly space out children
       alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {
@@ -201,24 +165,37 @@ const styles = StyleSheet.create({
         height: 2
       },
       shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5
-    },
-    modalText: {
-      marginBottom: 15,
-      textAlign: "center"
+      shadowRadius: 3.84,
+      elevation: 5,
+      position: "absolute",
+      top: "50%", // Position in the middle of the screen
+      alignSelf: "center",
+      marginTop: -100 // Half the height to center align it
     },
     closeButton: {
-      backgroundColor: "#fff",
+      position: "absolute",
+      top: 10,
+      right: 10,
+      backgroundColor: "#EEEEEE",
       borderRadius: 20,
-      elevation: 2,
-      alignSelf: "flex-end",
-      marginTop: "4%",
-      marginRight: "4%",
+      padding: 8
     },
     closeButtonText: {
-      color: "black",
-      fontWeight: "bold",
-      textAlign: "center"
+      fontSize: 18,
+      color: "#333333"
+    },
+    button: {
+      backgroundColor: "#009688",
+      paddingVertical: 12,
+      paddingHorizontal: 25,
+      borderRadius: 20,
+      width: "80%",
+      alignItems: "center"
+    },
+    buttonText: {
+      color: "#FFFFFF",
+      fontSize: 16,
+      fontWeight: "bold"
     }
+  
 })
