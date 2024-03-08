@@ -227,8 +227,8 @@ export default function HomeScreen() {
       long: coordinate.longitude,
       author
     };
-  
-    axios.post('http://190.168.0.134:5000/api/request', data)
+
+    axios.post('http://191.168.7.48:5000/api/request', data)
       .then(response => {
         if (response.status === 200) {
           setCoordinate(null);
