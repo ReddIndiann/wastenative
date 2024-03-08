@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, TextInput, TouchableOpacity, Modal, Dimensions } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, Image,FlatList, TextInput, TouchableOpacity, Modal, Dimensions } from 'react-native'
 import React, { useEffect, useState, useContext, useRef } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import { Marker } from 'react-native-maps';
@@ -8,9 +8,7 @@ import axios from 'axios';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import { CheckCircleIcon } from 'react-native-heroicons/solid';
 import RNPickerSelect from "react-native-picker-select";
-// import CustomModal from '../context/CustomModal';
 
-// Adjust the path as necessary
 
 import { AuthContext } from '../context/AuthContext';
 
@@ -26,10 +24,15 @@ export default function HomeScreen() {
   const [location, setLocation] = useState(null);
   const [cityInfo,setCityInfo] = useState(null);
   const [currentLocation, setCurrentLocation] = useState(null); // New state for live location
+  const [isSearchActive, setIsSearchActive] = useState(false);
 
   const [isCustomModalVisible, setIsCustomModalVisible] = useState(true);
   const [isSecondModalVisible, setIsSecondModalVisible] = useState(false);
-
+  const frequentLocations = [
+  
+    
+  ];
+  
   const CustomModal = ({ visible, onClose,frequentLocations }) => (
     <Modal
       animationType="slide"
@@ -47,13 +50,21 @@ export default function HomeScreen() {
           backgroundColor: 'white',
           padding: 20,
           borderRadius: 10,
+          
           width: "100%", // Takes 100% width of the screen
-          height: "8%", // Takes 50% height from the bottom
-          marginTop:"10%"
+          height: "100%", // Takes 50% height from the bottom
+         
         }}>
+           <TouchableOpacity style={styles.customModalCloseButton} onPress={onClose}>
+            <XMarkIcon color="#000" size={24} />
+          </TouchableOpacity>
+
+           <View style={{ fontSize: 20, marginBottom: 60,marginTop:10 }}>
            <View style={styles.searchContainer}>
       <GooglePlacesAutocomplete
   placeholder='Search for location'
+  onFocus={() => setIsSearchActive(true)}
+  onBlur={() => setIsSearchActive(false)}
   fetchDetails={true}
   style={styles.inputt}
   GooglePlacesSearchQuery={{
@@ -62,6 +73,7 @@ export default function HomeScreen() {
   onPress={(data, details = null) => {
     // 'details' is provided when fetchDetails = true
     console.log(data, details);
+    setIsSearchActive(false)
     setIsCustomModalVisible(false);
     setRegion({
       ...region,
@@ -80,37 +92,42 @@ export default function HomeScreen() {
 
 
 </View>
+           </View>
          
-        </View>
-        <View style={{
-                backgroundColor: 'white',
-                padding: 20,
-                borderRadius: 10,
-                width: "100%",
-                height: "50%",
-            }}>
-                <Text style={{ fontSize: 20, marginBottom: 20 }}>Choose Location</Text>
+      
+              
                 <TouchableOpacity 
                     style={styles.locationOption}
                     onPress={handleUseCurrentLocation}>
                     <Text style={styles.locationOptionText}>Use Current Location</Text>
                 </TouchableOpacity>
-                {/* {frequentLocations.map((location, index) => (
-                    <TouchableOpacity 
-                        key={index}
-                        style={styles.locationOption}
-                        onPress={() => {
-                            // Handle frequent location selection here
-                            // e.g., setRegion(location.coords);
-                        }}>
-                        <Text style={styles.locationOptionText}>{location.name}</Text>
-                    </TouchableOpacity>
-                ))} */}
-                <TouchableOpacity 
-                    style={styles.closeButton}
-                    onPress={onClose}>
-                    <Text style={styles.closeButtonText}>Close</Text>
-                </TouchableOpacity>
+                {
+  !isSearchActive && (
+                <FlatList
+  data={frequentLocations}
+  keyExtractor={(item) => item.id.toString()}
+  renderItem={({ item }) => (
+    <TouchableOpacity 
+      style={styles.locationOption}
+      onPress={() => {/* Handle the press event */}}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{
+          width: 10,
+          height: 10,
+          borderRadius: 5,
+          borderWidth: 2,
+          borderColor: '#000',
+          marginRight: 10,
+        }} />
+        <Text style={styles.locationOptionText}>{item.name}</Text>
+      </View>
+      <Text>{item.description}</Text>
+    </TouchableOpacity>
+  )}
+/>
+  )
+}
+                
             </View>
       </View>
     </Modal>
@@ -246,9 +263,8 @@ export default function HomeScreen() {
       };
 
       setCoordinate(newCoordinate);
-      setRegion(newRegion);
-
-      // Animate map to the new region
+      setRegion(newRegion)
+      
       if (mapRef.current) {
         mapRef.current.animateToRegion(newRegion, 1000);  // 1000 is the duration in ms
       }
@@ -363,7 +379,7 @@ export default function HomeScreen() {
         </View>
       </Modal>
 
-      <CustomModal visible={isCustomModalVisible} onClose={toggleCustomModal} />
+      <CustomModal visible={isCustomModalVisible} onClose={toggleCustomModal} frequentLocations={frequentLocations} />
 
 
       <Modal
@@ -406,18 +422,19 @@ const styles = StyleSheet.create({
   home: {
     flex: 1,
   },
-  searchContainer:{
-    position:'absolute',
-    width : "90%",
-    marginTop:10,
-    marginLeft:20,
-   backgroundColor:"white",
-
-  
- 
-   elevation:4,
-   padding:1,
-  
+  searchContainer: {
+    position: "absolute",
+    width: "100%",
+    backgroundColor: "white",
+    shadowColor: "black",
+    
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 4,
+    padding: 8,
+    borderRadius: 8,
+    zIndex: 10,
+    
   },
   inputt: {
     borderColor: "#888",
@@ -445,6 +462,11 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     borderRadius: 8,
+  },
+  customModalCloseButton: {
+    marginLeft: 300,
+    marginTop: 30,
+   
   },
   sendBtn: {
     width: "83%",
@@ -595,7 +617,33 @@ closeButtonText: {
     color: "#fff",
     fontSize: 16,
 }
- 
+,
+locationOption: {
+  padding: 20,
+  borderBottomWidth: 1,
+  borderBottomColor: '#e0e0e0',
+  backgroundColor: 'white',
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'flex-start',
+  borderRadius: 10, // Adjust for rounded corners
+  marginTop: 10, // Add space between items
+  shadowColor: "#000", // These lines add a shadow effect
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.1,
+  shadowRadius: 3.84,
+  elevation: 5,
+},
+
+locationOptionText: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginLeft: 10, // Add space between the icon and the text
+},
+
 })
 
 const pickerSelectStyles = StyleSheet.create({
@@ -618,5 +666,5 @@ const pickerSelectStyles = StyleSheet.create({
     borderRadius: 8,
     color: 'black',
     paddingRight: 30, // to ensure the text is never behind the icon
-  },
+  }
 });
