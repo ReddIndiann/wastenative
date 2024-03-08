@@ -13,7 +13,7 @@ export default function HomeScreen() {
     const [requests,setRequest]= useState([]);
     const [destination, setDestination] = useState();
     const [currentLocation, setCurrentLocation] = useState(null);
-    const {lat ,long ,userInfo} = useContext(AuthContext);
+    const {userInfo} = useContext(AuthContext);
     const [location, setLocation] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedRequest, setSelectedRequest] = useState(null);
@@ -74,7 +74,7 @@ export default function HomeScreen() {
     };
 
     const getRequests = () => {
-        axios.post('http://191.168.7.48:5000/api/drivers/assignHauls', {DriverName})
+        axios.post('http://172.20.10.5:5000/api/drivers/assignHauls', {DriverName})
             .then(response => {
                 setRequest(response.data);
                 console.log('Success:', response.data);

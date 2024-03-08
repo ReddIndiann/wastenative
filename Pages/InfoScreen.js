@@ -5,14 +5,30 @@ import { AuthContext } from '../context/AuthContext';
 
 
 const InfoScreen = ({ route, navigation }) => {
-    const {completeRequest ,comAssociate} = useContext(AuthContext);
+    const {completeRequest ,comAssociate,userInfo} = useContext(AuthContext);
     const { author, time, type, requestId } = route.params;
+    const myId = userInfo.id
     
     const setCompleted = () => {
         console.log(requestId);
         completeRequest(requestId,comAssociate);
         console.log("completed");
     }
+
+    const startChannel = async (userId) => {
+        const stringUserId = String(userId);
+        try {
+            const channel = client.channel('messaging', {
+              members: [myId, stringUserId],
+            });
+            console.log("myId:", myId, "stringUserId:", stringUserId, "channel:", channel)
+            await channel.watch();
+            navigation.navigate('ChatRoom', { channel }); // Navigate to ChatRoom with the channel
+        } catch (error) {
+            console.error("Error starting channel:", error);
+            console.log("myId:", myId, "stringUserId:", stringUserId)
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -34,7 +50,7 @@ const InfoScreen = ({ route, navigation }) => {
             <TouchableOpacity style={styles.completedBtn} onPress={()=>setCompleted()}>
                 <Text style={{color:"white",fontSize:15}}>Completed</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.completedBtn} onPress={()=>setCompleted()}>
+            <TouchableOpacity style={styles.completedBtn} onPress={startChannel}>
                 <Text style={{color:"white",fontSize:15}}>Chat Client</Text>
             </TouchableOpacity>
             {/*<Text>Username: {author}</Text>

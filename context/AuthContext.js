@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     const login = (email,password) => {
         console.log("Logging in");
         setLoading(true);
-        axios.post("http://191.168.7.48:5000/api/auth/login",{email,password})
+        axios.post("http://190.168.1.112:5000/api/auth/login",{email,password})
         .then(res=>{
             const { email, role, token, username,comAssociate ,phone,id,streamToken,lat,long} = res.data;
             console.log("API Response:", res.data);
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
     const completeRequest = async (requestId,comAssociate) => {
         console.log(requestId)
         try {
-            const response = await axios.post("http://172.20.10.9:5000/api/drivers/status", { requestId,comAssociate });
+            const response = await axios.post("http://190.168.1.112:5000/api/drivers/status", { requestId,comAssociate });
             console.log("Request completed:", response.data);
             // You can add logic here to update your state or UI based on the response
         } catch (error) {
